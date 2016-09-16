@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">"Drip "</string>
+    <string name="app_label">Test</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+    <string name="search_hint_home">Search for Reservoirs, Lakes…</string>
+    <string name="average">California\'s Average \nStorage</string>
+    <string name="kes">Keswick</string>
+    <string name="button_data_show">SHOW</string>
+    <string name="network_connection_error">No network connection available.</string>
+    <string name="tempPercent">0%</string>
+    <string name="url_error">Unable to retrieve web page. URL may be invalid.</string>
+</resources>
