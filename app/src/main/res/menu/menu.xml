@@ -5,9 +5,10 @@
         <item
             android:id="@+id/action_search"
             android:orderInCategory="100"
-            app:showAsAction="always"
+            app:showAsAction="collapseActionView|ifRoom"
             android:icon="@drawable/ic_search"
-            android:title="@string/search"/>
+            android:title="@string/search"
+            android:actionViewClass="android.widget.SearchView"/>
         <item
             android:id="@+id/action_settings"
             android:title="@string/settings">

@@ -1,6 +1,7 @@
 package hhs_students.com.drip;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -44,7 +45,20 @@ public class SearchResult extends AppCompatActivity {
         displayData = (TableLayout) findViewById(R.id.data_table);
         Intent intent = getIntent();
         mSearchReservoir = intent.getStringExtra("M_QUERY");
+        handleIntent(getIntent());
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+        }
     }
 
     // When user clicks button, calls AsyncTask.

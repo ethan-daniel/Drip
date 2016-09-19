@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private String DEBUG_TAG = "ERROR:";
     private String mQuery;
     private int lineCount = 498;
+    private SearchView searchView;
 
 
     @Override
@@ -64,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void doMySearch(String query) {
         Intent intent = new Intent(this, SearchResult.class);
-        intent.putExtra("M_QUERY", query);
         startActivity(intent);
     }
 
@@ -72,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -80,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_search:
+                searchView.setIconified(false);
                 Toast.makeText(this, "Search", Toast.LENGTH_SHORT)
                         .show();
                 break;
