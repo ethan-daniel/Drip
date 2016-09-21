@@ -1,5 +1,6 @@
 package hhs_students.com.drip;
 
+import android.app.DownloadManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -46,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         stateAverage = (TextView) findViewById(R.id.StateAverage);
+        searchView = (SearchView) findViewById(R.id.action_search);
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            doMySearch(query);
+            doMySearch("SEARCH");
         }
         String stringUrl = "http://cdec.water.ca.gov/cgi-progs/reservoirs/STORSUM";
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -64,23 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void doMySearch(String query) {
-        Intent intent = new Intent(this, SearchResult.class);
-        startActivity(intent);
+    private void doMySearch(String searchQuery) {
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.action_search).getActionView();
-
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -89,14 +81,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_search:
-                searchView.setIconified(false);
-                Toast.makeText(this, "Search", Toast.LENGTH_SHORT)
-                        .show();
+                doMySearch("SEARCH");
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
-                Toast.makeText(this, "Settings selected", Toast.LENGTH_SHORT)
-                        .show();
+
                 break;
             default:
                 break;
@@ -152,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+    public String readIt(InputStream stream, int len) throws IOException {
         Reader reader;
         reader = new InputStreamReader(stream, "UTF-8");
         BufferedReader in = new BufferedReader(reader);
