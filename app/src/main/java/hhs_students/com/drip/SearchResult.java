@@ -65,7 +65,7 @@ public class SearchResult extends AppCompatActivity {
     // Before attempting to fetch the URL, makes sure that there is a network connection.
     public void myClickHandler(View view) {
         // Gets the URL from the UI's text field.
-        String stringUrl = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=kes&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+        String stringUrl = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();

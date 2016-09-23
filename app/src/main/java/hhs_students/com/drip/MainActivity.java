@@ -17,10 +17,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,9 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 public class MainActivity extends AppCompatActivity {
 
     private TextView stateAverage;
@@ -40,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private String mQuery;
     private int lineCount = 498;
     private SearchView searchView;
+    private String M_SEARCH;
 
 
     @Override
@@ -49,9 +43,6 @@ public class MainActivity extends AppCompatActivity {
         stateAverage = (TextView) findViewById(R.id.StateAverage);
         searchView = (SearchView) findViewById(R.id.action_search);
         Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            doMySearch("SEARCH");
-        }
         String stringUrl = "http://cdec.water.ca.gov/cgi-progs/reservoirs/STORSUM";
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -62,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
             TextView errorMSG = (TextView) findViewById(R.id.error_message);
             errorMSG.setText(getString(R.string.network_connection_error));
         }
-
-    }
-
-    private void doMySearch(String searchQuery) {
 
     }
 
@@ -81,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.action_search:
-                doMySearch("SEARCH");
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 break;
             // action with ID action_settings was selected
             case R.id.action_settings:
@@ -130,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(DEBUG_TAG, "The response is: " + response);
                 is = conn.getInputStream();
                 // Convert the InputStream into a string
-                String contentAsString = readIt(is, len);
-                return contentAsString;
+                return (readIt(is, len));
+
 
                 // Makes sure that the InputStream is closed after the app is
                 // finished using it.
