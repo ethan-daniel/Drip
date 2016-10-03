@@ -37,6 +37,9 @@ public class SearchActivity extends Activity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
+            Intent resultIntent = new Intent(this, SearchResult.class);
+            resultIntent.putExtra("mQuery", query);
+            startActivity(resultIntent);
             //use the query to search your data somehow
         }
     }

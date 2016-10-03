@@ -2,6 +2,8 @@ package hhs_students.com.drip;
 
 import android.app.DownloadManager;
 import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -13,7 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
+import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,9 +67,11 @@ public class MainActivity extends AppCompatActivity {
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
-                (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+                (SearchView) (menu.findItem(R.id.action_search).getActionView());
+        ComponentName cn = getComponentName();
+        cn.getPackageName();
+        SearchableInfo si = searchManager.getSearchableInfo(cn);
+        searchView.setSearchableInfo(si);
         return true;
     }
 
