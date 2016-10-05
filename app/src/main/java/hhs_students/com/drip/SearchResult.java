@@ -44,7 +44,8 @@ public class SearchResult extends AppCompatActivity {
         testButton = (Button) findViewById(R.id.test_button);
         displayData = (TableLayout) findViewById(R.id.data_table);
         Intent intent = getIntent();
-        mSearchReservoir = intent.getStringExtra("M_QUERY");
+        mSearchReservoir = intent.getStringExtra("mQuery");
+        Log.d("debug", mSearchReservoir);
         handleIntent(getIntent());
 
     }
@@ -65,7 +66,7 @@ public class SearchResult extends AppCompatActivity {
     // Before attempting to fetch the URL, makes sure that there is a network connection.
     public void myClickHandler(View view) {
         // Gets the URL from the UI's text field.
-        String stringUrl = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=KES&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+        String stringUrl = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoir + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();

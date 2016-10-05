@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         cn.getPackageName();
         SearchableInfo si = searchManager.getSearchableInfo(cn);
         searchView.setSearchableInfo(si);
+
         return true;
     }
 
