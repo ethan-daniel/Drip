@@ -10,4 +10,40 @@
     <string name="network_connection_error">No network connection available.</string>
     <string name="tempPercent">0%</string>
     <string name="url_error">Unable to retrieve web page. URL may be invalid.</string>
+    <string-array name="reservoir_names">
+    <item>apn, Alpine Lake</item>
+    <item>ant, Antelope</item>
+    <item>ast, Lake Austrian</item>
+    <item>brt, Barret Lake</item>
+    <item>brv, Big Bear Lake</item>
+    <item>brd, Beardsley</item>
+    <item>bth, Bethany Forebay</item>
+    <item>blb, Black Butte</item>
+    <item>boc, Boca Reservoir</item>
+    <item>bmp, Bon Tempe Reservoir</item>
+    <item>bqc, Bouquet Reservoir</item>
+    <item>bwn, Bowman Lake</item>
+    <item>bws, Lake Spaulding System</item>
+    <item>bdp, Bridgeport Reservoir</item>
+    <item>bio, Briones Lake</item>
+    <item>buc, Eastman Lake</item>
+    <item>bcl, Bucks Lake</item>
+    <item>btv, Butt Valley Reservoir</item>
+    <item>cch, Cachuma Lake</item>
+    <!--<item></item>
+    <item></item>
+    <item></item>
+    <item></item>
+    <item></item>
+    <item></item>
+    <item></item>
+    <item></item>
+    <item></item>
+    <item></item>
+    <item></item>-->
+
+
+
+
+    </string-array>
 </resources>

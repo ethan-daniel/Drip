@@ -33,9 +33,12 @@ public class SearchResult extends AppCompatActivity {
     private static final String DEBUG_TAG = "HttpExample";
     private TableLayout displayData;
     private Button testButton;
-    private String mSearchReservoir;
+    private String mSearchReservoirID;
     private String endData;
     private String[] mDataSplit;
+    private String[] mAllReservoirNames;
+    private String[] mReservoirName;
+    private TextView mLayoutReservoirName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,9 +46,8 @@ public class SearchResult extends AppCompatActivity {
         setContentView(R.layout.search_result);
         testButton = (Button) findViewById(R.id.test_button);
         displayData = (TableLayout) findViewById(R.id.data_table);
-        Intent intent = getIntent();
-        mSearchReservoir = intent.getStringExtra("mQuery");
-        Log.d("debug", mSearchReservoir);
+        mLayoutReservoirName = (TextView) findViewById(R.id.searched_name);
+        mAllReservoirNames = getResources().getStringArray(R.array.reservoir_names);
         handleIntent(getIntent());
 
     }
@@ -60,18 +62,38 @@ public class SearchResult extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
         }
+        mSearchReservoirID = intent.getStringExtra("mQuery");
+        for (String s : mAllReservoirNames) {
+            int i = s.indexOf(mSearchReservoirID);
+            if (i > 0) {
+                mReservoirName = new String[2];
+                mReservoirName = mAllReservoirNames[i].split(",");
+                Log.d("debug", mReservoirName[1]);
+                mLayoutReservoirName.setText(mReservoirName[1]);
+            }
+        }
     }
 
     // When user clicks button, calls AsyncTask.
     // Before attempting to fetch the URL, makes sure that there is a network connection.
     public void myClickHandler(View view) {
         // Gets the URL from the UI's text field.
-        String stringUrl = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoir + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+        for (String s : mAllReservoirNames) {
+            int i = s.indexOf(mSearchReservoirID);
+            if (i >= 0) {
+                mReservoirName = new String[2];
+                mReservoirName = mAllReservoirNames[i].split(",");
+                mLayoutReservoirName.setText(mReservoirName[1]);
+            }
+        }
+        String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+        String mNameOfReservoir = "http://cdec.water.ca.gov/cgi-progs/stationInfo?station_id=" + mSearchReservoirID;
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadWebpageTask().execute(stringUrl);
+            new DownloadWebpageTask().execute(mStorageURL);
+            new DownloadWebpageTask().execute(mNameOfReservoir);
         } else {
             TextView errorMSG = (TextView) findViewById(R.id.error_message);
             errorMSG.setText(getString(R.string.network_connection_error));
