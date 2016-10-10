@@ -8,12 +8,6 @@
         android:id="@+id/searched_name"
         android:gravity="center_horizontal"
         android:textSize="20sp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_data_show"
-        android:id="@+id/test_button"
-        android:onClick="myClickHandler"/>
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

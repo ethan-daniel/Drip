@@ -44,7 +44,6 @@ public class SearchResult extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result);
-        testButton = (Button) findViewById(R.id.test_button);
         displayData = (TableLayout) findViewById(R.id.data_table);
         mLayoutReservoirName = (TextView) findViewById(R.id.searched_name);
         mAllReservoirNames = getResources().getStringArray(R.array.reservoir_names);
@@ -71,21 +70,7 @@ public class SearchResult extends AppCompatActivity {
                 Log.d("debug", mReservoirName[1]);
                 mLayoutReservoirName.setText(mReservoirName[1]);
             }
-        }
     }
-
-    // When user clicks button, calls AsyncTask.
-    // Before attempting to fetch the URL, makes sure that there is a network connection.
-    public void myClickHandler(View view) {
-        // Gets the URL from the UI's text field.
-        for (String s : mAllReservoirNames) {
-            int i = s.indexOf(mSearchReservoirID);
-            if (i >= 0) {
-                mReservoirName = new String[2];
-                mReservoirName = mAllReservoirNames[i].split(",");
-                mLayoutReservoirName.setText(mReservoirName[1]);
-            }
-        }
         String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
         String mNameOfReservoir = "http://cdec.water.ca.gov/cgi-progs/stationInfo?station_id=" + mSearchReservoirID;
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -98,6 +83,24 @@ public class SearchResult extends AppCompatActivity {
             TextView errorMSG = (TextView) findViewById(R.id.error_message);
             errorMSG.setText(getString(R.string.network_connection_error));
         }
+    }
+
+    // When user clicks button, calls AsyncTask.
+    // Before attempting to fetch the URL, makes sure that there is a network connection.
+    public void myClickHandler(View view) {
+        /*String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+        String mNameOfReservoir = "http://cdec.water.ca.gov/cgi-progs/stationInfo?station_id=" + mSearchReservoirID;
+        ConnectivityManager connMgr = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            new DownloadWebpageTask().execute(mStorageURL);
+            new DownloadWebpageTask().execute(mNameOfReservoir);
+        } else {
+            TextView errorMSG = (TextView) findViewById(R.id.error_message);
+            errorMSG.setText(getString(R.string.network_connection_error));
+        }
+    }*/
     }
 
     // Uses AsyncTask to create a task away from the main UI thread. This task takes a
@@ -121,7 +124,7 @@ public class SearchResult extends AppCompatActivity {
         protected void onPostExecute(String result) {
             mDataSplit = result.split(";");
             String[] temp;
-            for(int i = 2; i < mDataSplit.length; i++) {
+            for(int i = 2; i < mDataSplit.length-1; i++) {
                 temp = mDataSplit[i].split(",");
                 addRow(dateFormat(temp[0]), temp[2]);
             }
@@ -176,7 +179,10 @@ public class SearchResult extends AppCompatActivity {
     }
 
     public String dateFormat(String date){
-        return date.substring(4, 6) + "/" + date.substring(6) + "/" + date.substring(0,4);
+        Log.d("debug", date);
+        if (!date.contains("<!--"))
+            return date.substring(4, 6) + "/" + date.substring(6) + "/" + date.substring(0, 4);
+        return "null";
     }
     public void addRow(String date, String levels) {
         TableRow row= new TableRow(this);
