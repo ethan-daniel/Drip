@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 public class SearchResult extends AppCompatActivity {
     private static final String DEBUG_TAG = "HttpExample";
+    private String firstLineCSV = "Title:";
     private TableLayout displayData;
     private Button testButton;
     private String mSearchReservoirID;
@@ -44,10 +45,11 @@ public class SearchResult extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result);
-        displayData = (TableLayout) findViewById(R.id.data_table);
-        mLayoutReservoirName = (TextView) findViewById(R.id.searched_name);
         mAllReservoirNames = getResources().getStringArray(R.array.reservoir_names);
         handleIntent(getIntent());
+        displayData = (TableLayout) findViewById(R.id.data_table);
+        mLayoutReservoirName = (TextView) findViewById(R.id.searched_name);
+
 
     }
 
@@ -62,23 +64,12 @@ public class SearchResult extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
         }
         mSearchReservoirID = intent.getStringExtra("mQuery");
-        for (String s : mAllReservoirNames) {
-            int i = s.indexOf(mSearchReservoirID);
-            if (i > 0) {
-                mReservoirName = new String[2];
-                mReservoirName = mAllReservoirNames[i].split(",");
-                Log.d("debug", mReservoirName[1]);
-                mLayoutReservoirName.setText(mReservoirName[1]);
-            }
-    }
         String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
-        String mNameOfReservoir = "http://cdec.water.ca.gov/cgi-progs/stationInfo?station_id=" + mSearchReservoirID;
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             new DownloadWebpageTask().execute(mStorageURL);
-            new DownloadWebpageTask().execute(mNameOfReservoir);
         } else {
             TextView errorMSG = (TextView) findViewById(R.id.error_message);
             errorMSG.setText(getString(R.string.network_connection_error));
@@ -122,11 +113,26 @@ public class SearchResult extends AppCompatActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            mDataSplit = result.split(";");
-            String[] temp;
-            for(int i = 2; i < mDataSplit.length-1; i++) {
-                temp = mDataSplit[i].split(",");
-                addRow(dateFormat(temp[0]), temp[2]);
+            if (result.substring(0,6).equals(firstLineCSV)) {
+                Log.d("result", result);
+                mDataSplit = result.split(";");
+                for(int i = 0; i < mDataSplit.length; i++) {
+                    Log.d("data", mDataSplit[i]);
+                }
+                String[] temp;
+                for (int i = 0; i < mAllReservoirNames.length; i++) {
+                    if (mAllReservoirNames[i].contains(mSearchReservoirID)) {
+                        mReservoirName = new String[2];
+                        mReservoirName = mAllReservoirNames[i].split(",");
+                        Log.d("handleIntent", mReservoirName[1]);
+                        mLayoutReservoirName.setText(mReservoirName[1]);
+                    }
+                }
+                for (int i = 2; i < mDataSplit.length; i++) {
+                    temp = mDataSplit[i].split(",");
+                    Log.d("opexecute", temp[0] + " " + temp[2]);
+                    addRow(dateFormat(temp[0]), temp[2]);
+                }
             }
         }
     }
@@ -179,7 +185,7 @@ public class SearchResult extends AppCompatActivity {
     }
 
     public String dateFormat(String date){
-        Log.d("debug", date);
+        Log.d("dateForm", date);
         if (!date.contains("<!--"))
             return date.substring(4, 6) + "/" + date.substring(6) + "/" + date.substring(0, 4);
         return "null";
