@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,7 +36,9 @@ public class SearchResult extends AppCompatActivity {
     private TableLayout displayData;
     private Button testButton;
     private String mSearchReservoirID;
+    private String mSearchOrigQuery;
     private String endData;
+    private String noData;
     private String[] mDataSplit;
     private String[] mAllReservoirNames;
     private String[] mReservoirName;
@@ -49,8 +52,7 @@ public class SearchResult extends AppCompatActivity {
         handleIntent(getIntent());
         displayData = (TableLayout) findViewById(R.id.data_table);
         mLayoutReservoirName = (TextView) findViewById(R.id.searched_name);
-
-
+        noData = "N/A";
     }
 
     @Override
@@ -63,7 +65,17 @@ public class SearchResult extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
         }
-        mSearchReservoirID = intent.getStringExtra("mQuery");
+        mSearchOrigQuery = intent.getStringExtra("mQuery");
+        if(mSearchOrigQuery.length() > 3) {
+            mReservoirName = new String[2];
+            for (int i = 0; i < mAllReservoirNames.length; i++) {
+                if (mAllReservoirNames[i].toLowerCase().contains(mSearchOrigQuery)) {
+                    mReservoirName = mAllReservoirNames[i].split(",");
+                }
+            }
+            Log.d("reservoirname", mReservoirName[0]);
+            mSearchReservoirID = mReservoirName[0];
+        }
         String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -94,7 +106,8 @@ public class SearchResult extends AppCompatActivity {
     }*/
     }
 
-    // Uses AsyncTask to create a task away from the main UI thread. This task takes a
+    // Uses AsyncTask to create a task away from the main UI thread. This task
+    // takes a
     // URL string and uses it to create an HttpUrlConnection. Once the connection
     // has been established, the AsyncTask downloads the contents of the webpage as
     // an InputStream. Finally, the InputStream is converted into a string, which is
@@ -116,9 +129,6 @@ public class SearchResult extends AppCompatActivity {
             if (result.substring(0,6).equals(firstLineCSV)) {
                 Log.d("result", result);
                 mDataSplit = result.split(";");
-                for(int i = 0; i < mDataSplit.length; i++) {
-                    Log.d("data", mDataSplit[i]);
-                }
                 String[] temp;
                 for (int i = 0; i < mAllReservoirNames.length; i++) {
                     if (mAllReservoirNames[i].contains(mSearchReservoirID)) {
@@ -131,6 +141,8 @@ public class SearchResult extends AppCompatActivity {
                 for (int i = 2; i < mDataSplit.length; i++) {
                     temp = mDataSplit[i].split(",");
                     Log.d("opexecute", temp[0] + " " + temp[2]);
+                    if(temp[2].equals("m"))
+                        temp[2] = noData;
                     addRow(dateFormat(temp[0]), temp[2]);
                 }
             }
@@ -195,7 +207,9 @@ public class SearchResult extends AppCompatActivity {
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         row.setLayoutParams(lp);
         TextView tDate = new TextView(this);
+        tDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         TextView tLevels = new TextView(this);
+        tLevels.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         tDate.setText(date);
         tDate.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
         tLevels.setText(levels);
