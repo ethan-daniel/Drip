@@ -34,7 +34,8 @@ public class SearchResult extends AppCompatActivity {
     private static final String DEBUG_TAG = "HttpExample";
     private String firstLineCSV = "Title:";
     private TableLayout displayData;
-    private Button testButton;
+    private Button monthlyButton;
+    private Button dailyButton;
     private String mSearchReservoirID;
     private String mSearchOrigQuery;
     private String endData;
@@ -48,6 +49,7 @@ public class SearchResult extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result);
+
         mAllReservoirNames = getResources().getStringArray(R.array.reservoir_names);
         handleIntent(getIntent());
         displayData = (TableLayout) findViewById(R.id.data_table);
@@ -76,10 +78,37 @@ public class SearchResult extends AppCompatActivity {
             Log.d("reservoirname", mReservoirName[0]);
             mSearchReservoirID = mReservoirName[0];
         }
-        /*if(mReservoirName[5].contains("false"))
+             if(mReservoirName[5].contains("true") && mReservoirName[6].contains("true")){
+            //dodaily, set both visible
+                 String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                 ConnectivityManager connMgr = (ConnectivityManager)
+                         getSystemService(Context.CONNECTIVITY_SERVICE);
+                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                 if (networkInfo != null && networkInfo.isConnected()) {
+                     new DownloadWebpageTask().execute(mStorageURL);
+                 } else {
+                     TextView errorMSG = (TextView) findViewById(R.id.error_message);
+                     errorMSG.setText(getString(R.string.network_connection_error));
+                 }
 
+            }
+            else if(mReservoirName[5].contains("true") && mReservoirName[6].contains("false"){
+            //dodaily, don't set either visible
+            String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+            ConnectivityManager connMgr = (ConnectivityManager)
+                    getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.isConnected()) {
+                new DownloadWebpageTask().execute(mStorageURL);
+            } else {
+                TextView errorMSG = (TextView) findViewById(R.id.error_message);
+                errorMSG.setText(getString(R.string.network_connection_error));
+            }
+            }
+            else {
+            //don't do anything, displayData addview
+            }
 
-        */
         String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
