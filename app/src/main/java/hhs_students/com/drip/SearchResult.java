@@ -67,7 +67,7 @@ public class SearchResult extends AppCompatActivity {
         }
         mSearchOrigQuery = intent.getStringExtra("mQuery");
         if(mSearchOrigQuery.length() > 3) {
-            mReservoirName = new String[2];
+            mReservoirName = new String[7];
             for (int i = 0; i < mAllReservoirNames.length; i++) {
                 if (mAllReservoirNames[i].toLowerCase().contains(mSearchOrigQuery)) {
                     mReservoirName = mAllReservoirNames[i].split(",");
@@ -76,6 +76,10 @@ public class SearchResult extends AppCompatActivity {
             Log.d("reservoirname", mReservoirName[0]);
             mSearchReservoirID = mReservoirName[0];
         }
+        /*if(mReservoirName[5].contains("false"))
+
+
+        */
         String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
         ConnectivityManager connMgr = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);

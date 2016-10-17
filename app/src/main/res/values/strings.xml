@@ -10,25 +10,207 @@
     <string name="network_connection_error">No network connection available.</string>
     <string name="tempPercent">0%</string>
     <string name="url_error">Unable to retrieve web page. URL may be invalid.</string>
+        <string name="daily">Daily</string>
+        <string name="monthly">Monthly</string>
     <string-array name="reservoir_names">
-    <item>apn, Alpine Lake</item>
-    <item>ant, Antelope</item>
-    <item>ast, Lake Austrian</item>
-    <item>brt, Barret Lake</item>
-    <item>brv, Big Bear Lake</item>
-    <item>brd, Beardsley</item>
-    <item>bth, Bethany Forebay</item>
-    <item>blb, Black Butte</item>
-    <item>boc, Boca Reservoir</item>
-    <item>bmp, Bon Tempe Reservoir</item>
-    <item>bqc, Bouquet Reservoir</item>
-    <item>bwn, Bowman Lake</item>
-    <item>bws, Lake Spaulding System</item>
-    <item>bdp, Bridgeport Reservoir</item>
-    <item>bio, Briones Lake</item>
-    <item>buc, Eastman Lake</item>
-    <item>bcl, Bucks Lake</item>
-    <item>btv, Butt Valley Reservoir</item>
-    <item>cch, Cachuma Lake</item>
+    <item>APN,ALPINE LAKE,Alpine ,Alpine Lake ,Lagunitas Creek ,false,true</item>
+    <item>ANT,ANTELOPE LAKE,Antelope ,Antelope ,Indian Creek ,true,true</item>
+    <item>AST,AUSTRIAN,Austrian ,Lake Austrian ,Los Gatos Creek ,false,true</item>
+    <item>BRT,BARRETT,Barrett ,Barrett Lake ,Cottonwood Creek ,false,true</item>
+    <item>BRV,BEAR VALLEY DAM,Bear Valley ,Big Bear Lake ,Bear Creek ,false,true</item>
+    <item>BRD,BEARDSLEY LAKE,Beardsley ,Beardsley Lake ,M Fork Stanislaus River ,true,true</item>
+    <item>BTH,BETHANY FOREBAY,Bethany Forebay ,Bethany Forebay ,Delta ,false,true</item>
+    <item>BLB,BLACK BUTTE,Black Butte Rereg ,Black Butte ,Stony Creek ,true,true</item>
+    <item>BOC,BOCA RESERVOIR,Boca ,Boca Reservoir ,Little Truckee River ,true,true</item>
+    <item>BMP,BON TEMPE,Bon Tempe ,Bon Tempe Reservoir ,Lagunitas Creek ,false,true</item>
+    <item>BQC,BOUQUET CANYON,Bouquet Canyon ,Bouquet Reservoir ,Bouquet Creek ,false,true</item>
+    <item>BWN,BOWMAN LAKE,Bowman ,Bowman Lake ,Canyon Creek ,false,true</item>
+    <item>BWS,LAKE SPAULDING S YUBA SYSTEM,Bowman Spaulding Diversion ,Lake Spaulding System ,none ,false,true</item>
+    <item>BDP,BRIDGEPORT RESERVOIR,Bridgeport ,Bridgeport Reservoir ,E Fork Walker River ,false,true</item>
+    <item>BIO,BRIONES DAM,Briones ,Briones Lake ,Bear Creek ,false,true</item>
+    <item>BUC,BUCHANAN DAM,Buchanan ,Eastman Lake ,Chowchilla River ,true,true</item>
+    <item>BCL,BUCKS LAKE STORAGE,Bucks ,Bucks Lake ,Bucks Creek ,true,true</item>
+    <item>BTV,BUTT VALLEY,Butt Valley ,Butt Valley Reservoir ,Butt Creek ,true,true</item>
+    <item>CCH,CACHUMA LAKE,Cachuma ,Cachuma Lake ,Santa Ynez ,true,true</item>
+    <item>CVE,CALAVERAS,Calaveras ,Calaveras Reservoir ,Calaveras Creek ,true,true</item>
+    <item>CMN,CAMANCHE RESERVOIR,Camanche ,Camanche Reservoir ,Mokelumne River ,true,true</item>
+    <item>CFW,BEAR RIVER AT CAMP FAR WEST DAM,Camp Far West ,Camp Far West ,Bear River ,false,true</item>
+    <item>ALM,LAKE ALMANOR,Canyon ,Lake Almanor ,N Fork Feather River ,true,true</item>
+    <item>CPL,CAPLES LAKE (PG+E),Caples ,Caples Lake ,Silver Fork American River ,true,true</item>
+    <item>CSI,CASITAS,Casitas ,Lake Casitas ,Casitas Creek ,false,true</item>
+    <item>CAS,CASTAIC,Castaic ,Castaic Lake ,Castaic Creek ,true,true</item>
+    <item>SLW,LAKE SILVERWOOD,Cedar Springs ,Lake Silverwood ,Mojave River ,false,true</item>
+    <item>CHB,CHABOT,Chabot ,Lake Chabot ,San Leandro Creek ,false,true</item>
+    <item>CHV,CHERRY VALLEY DAM,Cherry Valley ,Cherry Lake ,Cherry Creek ,true,false</item>
+    <item>CHY,CHERRY LAKE,Cherry Valley ,Cherry Lake ,Cherry Creek ,false,true</item>
+    <item>JNN,LAKE JENNINGS,Chet Harrit ,Lake Jennings ,Quail Canyon Creek ,false,true</item>
+    <item>CLK,CLEAR LK - KLAMATH R,Clear Lake ,Clear Lake ,Lost Creek ,false,true</item>
+    <item>CLA,CLEAR LK - CACHE CREEK,Clear Lake Imp ,Clear Lake ,Cache Creek ,true,true</item>
+    <item>CGS,COGSWELL RESERVOIR,Cogswell ,Cogswell Reservoir ,W Fork San Gabriel River ,false,true</item>
+    <item>CMB,COMBIE LAKE,Combie ,Lake Combie ,Bear River ,false,true</item>
+    <item>CTG,COURTRIGHT (PG+E),Courtright ,Helms Creek ,Helms Creek ,true,true</item>
+    <item>CYC,COYOTE RES-STA CLARA,Coyote Percolation ,Coyote Reservoir ,Coyote Creek ,false,true</item>
+    <item>COY,COYOTE (LAKE MENDOCINO),Coyote Valley ,Lake Mendocino ,Russian River ,true,false</item>
+    <item>MNC,LAKE MENDOCINO,Coyote Valley ,Lake Mendocino ,Russian River ,false,true</item>
+    <item>CNV,CRANE VALLEY,Crane Valley Storage ,Crane Valley Lake ,N Fork San Joaquin River ,false,true</item>
+    <item>CUY,CUYAMACA DAM,Cuyamaca ,Cuyamaca Lake ,Boulder Creek ,false,true</item>
+    <item>MHV,LAKE MOHAVE,Davis ,Lake Mohave ,Colorado River ,false,true</item>
+    <item>DLV,DEL VALLE,Del Valle ,Lake Del Valle ,Arroyo Valle ,false,true</item>
+    <item>DMV,DIAMOND VALLEY,Diamond Valley ,Diamond Valley Lake ,Domenigoni Valley Creek ,true,true</item>
+    <item>DNP,DON PEDRO RESERVOIR,Don Pedro ,New Don Pedro Reservoir,Tuolumne River ,true,true</item>
+    <item>DON,DONNELLS,Donnells ,Donnells Reservoir ,M Fork Stanislaus ,true,true</item>
+    <item>DNN,DONNER LAKE (DWR),Donner ,Donner Lake ,Truckee River ,true,false</item>
+    <item>DNL,DONNER LAKE (STORAGE),Donner ,Donner Lake ,Truckee River ,false,true</item>
+    <item>DWN,DWINNELL,Dwinnell ,Dwinnell,Shasta River ,false,true</item>
+    <item>EPK,EAST PARK RESERVOIR,East Park ,East Park Reservoir ,Stony Creek ,false,true</item>
+    <item>ELC,EL CAPITAN DAM,El Capitan ,El Capitan ,San Diego River ,false,true</item>
+    <item>ENR,LAKE ELEANOR,Eleanor ,Lake Eleanor ,Tuolumne River ,false,true</item>
+    <item>ENG,ENGLEBRIGHT (USACE),Englebright Narrows ,Englebright Lake ,Yuba River ,true,true</item>
+    <item>FRM,FARMINGTON (SPILL ELEV 156.5 FT),Farmington , ,Littlejohn Creek ,true,false</item>
+    <item>FLR,FLORENCE LAKE (SCE),Florence ,Florence Lake ,S Fork San Joaquin River ,false,true</item>
+    <item>FOL,FOLSOM LAKE,Folsom ,Folsom Lake ,American River ,true,true</item>
+    <item>FRL,FRENCH LAKE,French Lake ,French Lake ,Canyon Creek ,false,true</item>
+    <item>FMD,FRENCH MEADOWS,French Meadows ,French Meadows Reservoir,M Fork American ,true,true</item>
+    <item>FRD,FRENCHMAN DAM,Frenchman ,Frenchman Lake ,Little Last Chance Creek ,true,true</item>
+    <item>MIL,FRIANT DAM (MILLERTON),Friant ,Millerton Lake ,San Joaquin River ,true,true</item>
+    <item>GLK,GEM LAKE,Gem Lake ,Gem Lake,Rush Creek ,false,true</item>
+    <item>GBR,GERBER,Gerber ,Gerber Lake ,Klamath River ,false,true</item>
+    <item>GBL,GIBRALTAR DAM,Gibraltar ,Gibraltar Lake ,Santa Ynez River ,false,true</item>
+    <item>PWL,LAKE POWELL,Glen Canyon ,Lake Powell ,Colorado River ,false,true</item>
+    <item>GNT,GRANT LAKE,Grant Lake ,Grant Lake ,Rush Creek ,false,true</item>
+    <item>DAV,LAKE DAVIS (DWR),Grizzly Valley ,Lake Davis ,Big Grizzly Creek ,true,true</item>
+    <item>HWE,HAIWEE,Haiwee ,Haiwee Reservoir ,Rose Valley ,false,true</item>
+    <item>HNS,HENSHAW,Henshaw ,Lake Henshaw ,San Luis Rey River ,false,true</item>
+    <item>HID,HIDDEN DAM (HENSLEY),Hidden ,Hensley Lake ,Fresno River ,true,true</item>
+    <item>MEA,LAKE MEAD,Hoover ,Lake Mead,Colorado River ,false,true</item>
+    <item>HNT,HUNTINGTON LAKE (USBR),Huntington ,Huntington Lake ,San Joaquin River ,false,true</item>
+    <item>ICH,ICE HOUSE (SMUD),Ice House ,Ice House Reservoir ,S Fork Silver Creek ,true,true</item>
+    <item>INP,INDEPENDENCE LAKE NEAR TRUCKEE,Independence ,Independence Lake ,Independence Creek ,true,false</item>
+    <item>INL,INDEPENDENCE LAKE,Independence ,Independence Lake ,Independence Creek ,false,true</item>
+    <item>MMW,MOUNTAIN MEADOWS,Indian Ole ,Mountain Meadows ,N Fork Feather River Tributary ,true,true</item>
+    <item>INV,INDIAN VALLEY,Indian Valley ,Indian Valley Reservoir,Cache Creek Tributary ,true,true</item>
+    <item>IRC,IRON CANYON,Iron Canyon ,Iron Canyon Reservoir ,Pit River Tribuatary ,false,true</item>
+    <item>ISB,ISABELLA DAM,Isabella ,Lake Isabella ,Kern River ,true,true</item>
+    <item>JCK,JACKSON MEADOWS (NEVADA CO WD),Jackson Meadows ,Jackson Meadows Res ,M Fork Yuba River ,false,true</item>
+    <item>ATN,LAKE SAN ANTONIO,James H Turner ,Lake San Antonio ,Salinas River Tributary ,false,true</item>
+    <item>KNT,KENT,Kent ,Kent Lake,Lagunitas Creek ,false,true</item>
+    <item>KRH,KERCKHOFF DAM,Kerckhoff Diversion ,Kerckhoff Reservoir ,San Joaquin ,false,true</item>
+    <item>KES,KESWICK RESERVOIR,Keswick ,Keswick Reservoir ,Sacramento River ,true,true</item>
+    <item>LGR,LA GRANGE RELEASE,La Grange , ,Tuolumne River ,false,false</item>
+    <item>LFY,LAFAYETTE,Lafayette ,Lafayette,Lafayette Creek ,false,true</item>
+    <item>LGT,LAGUNITAS LAKE,Lagunitas ,Lagunitas Lake ,Lagunitas Creek ,false,true</item>
+    <item>HMT,LAKE HEMET,Lake Hemet ,Lake Hemet ,San Jacinto River ,false,true</item>
+    <item>HNN,LAKE HENNESSEY,Lake Hennessey ,Lake Hennessey ,Conn Creek ,false,true</item>
+    <item>HDG,LAKE HODGES,Lake Hodges ,Lake Hodges ,San Dieguito River ,false,true</item>
+    <item>LVD,LOVELAND RESERVOIR,Lake Loveland ,Lake Loveland ,Sweetwater River ,false,true</item>
+    <item>TAH,LAKE TAHOE,Lake Tahoe ,Lake Tahoe ,Truckee River ,false,true</item>
+    <item>LVY,LAKE VALLEY RESERVOIR,Lake Valley ,Lake Valley Reservoir ,N Fork American River ,true,true</item>
+    <item>LRA,LEROY ANDERSON,Leroy Anderson ,Anderson Lake ,Coyote Creek ,false,true</item>
+    <item>LEW,LEWISTON,Lewiston ,Lewiston Lake ,Trinity River ,true,true</item>
+    <item>LNG,LEXINGTON RESERVOIR,Lexington ,Los Gatos Creek ,Los Gatos Creek ,false,true</item>
+    <item>LGV,LITTLE GRASS VALLEY,Little Grass Valley ,Little Grass Valley Reservoir ,S Fork Feather River ,true,true</item>
+    <item>CRW,LAKE CROWLEY,Long Valley ,Lake Crowley ,Owens River ,false,true</item>
+    <item>LON,LOON LAKE (SMUD),Loon Lake ,Loon Lake,Rubicon River Tributary ,true,true</item>
+    <item>LSB,LOS BANOS,Los Banos ,Los Banos Reservoir ,Los Banos Creek ,false,true</item>
+    <item>LVQ,LOS VAQUEROS RESERVOIR,Los Vaqueros ,Los Vaqueros Reservoir ,Kellogg Creek ,false,true</item>
+    <item>LWB,LOWER BEAR,Lower Bear River ,Lower Bear Reservoir ,Bear River ,false,true</item>
+    <item>CRY,LOWER CRYSTAL SPRINGS RESERVOIR,Lower Crystal Springs ,Crystal Springs Reservoir ,San Mateo Creek ,false,true</item>
+    <item>HHL,HELL HOLE (PCWA),Lower Hell Hole ,Hell Hole Reservoir ,Rubicon River ,true,true</item>
+    <item>LYS,LYONS RESERVOIR,Lyons ,Lyons Reservoir ,S Fork Stanislaus River ,true,true</item>
+    <item>SWB,STRAWBERRY,Main Strawberry ,Pinecrest Lake ,S Fork Stanislaus ,true,true</item>
+    <item>MPL,MAMMOTH POOL,Mammoth Pool ,Mammoth Pool Reservoir ,San Joaquin River ,false,true</item>
+    <item>EDN,STUMPY MEADOWS RESERVOIR(MARK EDSON DAM),Mark Edson ,Stumpy Meadows Lake ,Rubicon River ,true,true</item>
+    <item>MRT,MARTIS CREEK RESERVOIR,Martis Creek Reservoir ,Martis Creek ,Martis Creek ,true,true</item>
+    <item>MAT,MATILIJA DAM,Matilija ,Matilija Reservoir ,Matilija Creek ,false,true</item>
+    <item>MHW,LAKE MATHEWS,Matthews ,Lake Matthews ,De Luz Creek Tributary ,false,true</item>
+    <item>MCO,LAKE MCCLOUD,McCloud ,McCloud Reservoir ,McCloud River ,false,true</item>
+    <item>MCS,LAKE MC SWAIN,McSwain ,Lake McSwain ,Merced River ,false,true</item>
+    <item>MMR,MIRAMAR,Miramar ,Miramar ,none ,false,true</item>
+    <item>MDO,MODESTO RESERVOIR,Modesto Reservoir , ,Tuolumne River ,false,true</item>
+    <item>BER,BERRYESSA,Montecello ,Lake Berryessa ,Putah Creek ,true,true</item>
+    <item>MOR,MORENA DAM,Morena ,Morena Lake ,Cottonwood Creek ,false,true</item>
+    <item>MRR,MURRAY RES,Murray ,Murray Reservoir ,Chaparral Canyon ,false,true</item>
+    <item>NCM,NACIMIENTO,Nacimiento ,Lake Nacimiento ,Nacimiento River ,false,true</item>
+    <item>NAT,LAKE NATOMA (NIMBUS DAM),Natoma ,Lake Natoma ,American River ,true,true</item>
+    <item>BUL,NEW BULLARDS BAR,New Bullards Bar ,Bullards Bar Reservoir ,N Fork Yuba River ,true,true</item>
+    <item>EXC,NEW EXCHEQUER-LK MCCLURE,New Exchequer ,Lake McClure ,Merced River ,true,false</item>
+    <item>MCR,LAKE MCCLURE,New Exchequer ,Lake McClure ,Merced River ,false,true</item>
+    <item>NHG,NEW HOGAN LAKE,New Hogan ,New Hogan Lake ,Calaveras River ,true,true</item>
+    <item>NML,NEW MELONES RESERVOIR,New Melones ,New Melones Reservoir ,Stanislaus River ,true,true</item>
+    <item>NCA,NICASIO,Nicasio ,Nicasio Reservoir ,Nicasio Creek ,false,true</item>
+    <item>ONF,ONEILL FOREBAY,O Neill Forebay , ,San Luis Creek ,false,true</item>
+    <item>HTH,HETCH HETCHY,O Shanessey ,Hetch-Hetchy Reservoir ,Tuolumne River ,true,true</item>
+    <item>ORO,OROVILLE DAM,Oroville ,Lake Oroville ,Feather River ,true,true</item>
+    <item>LOT,LOWER OTAY,Otay ,Lower Otay ,Otay River ,false,true</item>
+    <item>PAR,PARDEE,Pardee Reservoir ,Pardee Res ,Mokelumne River ,true,true</item>
+    <item>HVS,LAKE HAVASU,Parker Dam ,Lake Havasu ,Colorado River ,false,true</item>
+    <item>PRR,PERRIS,Perris ,Perris Lake ,none ,true,true</item>
+    <item>SCD,SCOTT DAM,Pillsbury ,Lake Pillsbury ,Eel River ,true,false</item>
+    <item>PLL,LAKE PILLSBURY,Pillsbury ,Lake Pillsbury ,Eel River ,false,true</item>
+    <item>PNF,PINE FLAT DAM,Pine Flat ,Pine Flat Dam ,Kings River ,true,true</item>
+    <item>PT6,PIT R PH #6,Pit No. 6 ,Pit No. 6,Pit River ,false,true</item>
+    <item>PT7,PIT R PH #7,Pit No. 7 ,Pit No. 7,Pit River ,false,true</item>
+    <item>BIT,LAKE BRITTON,Pit Number 3 ,Lake Britton ,Pit River ,false,true</item>
+    <item>PVP,POTTER VALLEY PH,Potter Valley PH , ,EF Russian River ,false,false</item>
+    <item>PRS,PROSSER CREEK RESERVOIR,Prosser ,Prosser Reservoir ,Prosser Creek ,true,true</item>
+    <item>PYM,PYRAMID,Pyramid ,Pyramid Lake ,Piru Creek ,true,true</item>
+    <item>QUL,QUAIL,Quail ,Quail Lake ,none ,false,true</item>
+    <item>RLC,RAILROAD CANYON,Railroad Canyon ,Railroad Canyon Reservoir ,San Jacinto River ,false,true</item>
+    <item>RDN,REDINGER LAKE,Redinger ,Redinger Lake ,San Joaquin River ,false,true</item>
+    <item>RLF,RELIEF,Relief ,Relief Reservoir ,M Fork Stanislaus River ,true,true</item>
+    <item>RLL,ROLLINS,Rollins ,Rollins Reservoir ,Bear River ,false,true</item>
+    <item>RTD,RUTH DAM,Ruth ,Ruth Lake,Mad River ,true,true</item>
+    <item>SDB,SADDLEBAG LAKE RESERVOIR,Saddlebag ,Saddlebag Lake ,Lee Vining Creek ,false,true</item>
+    <item>SLN,SANTA MARGARITA LAKE,Salinas ,Santa Margarita Lake ,Salinas River ,false,true</item>
+    <item>SLS,SALT SPRINGS,Salt Springs , ,N Fork Mokelumne River ,true,true</item>
+    <item>SNN,SAN ANDREAS,San Andreas ,San Andreas Lake ,San Mateo Creek Tributary ,false,true</item>
+    <item>SAT,SAN ANTONIO RESERVOIR,San Antonio ,San Antonio Reservoir ,Alameda Creek Tributary ,true,true</item>
+    <item>SGB,SAN GABRIEL,San Gabriel No. 1 ,San Gabriel Reservoir ,San Gabriel ,false,true</item>
+    <item>SNL,SAN LUIS RESERVOIR,San Luis ,San Luis Reservoir ,San Luis Creek ,true,true</item>
+    <item>SLF,SAN LUIS RESERVOIR (FEDERAL),San Luis ,San Luis Reservoir (CVP),San Luis Creek ,false,true</item>
+    <item>LUS,SAN LUIS RESERVOIR (STATE),San Luis ,San Luis Reservoir (SWP),San Luis Creek ,false,true</item>
+    <item>SPB,SAN PABLO,San Pablo ,San Pablo Reservoir ,San Pablo ,false,true</item>
+    <item>SVT,SAN VICENTE,San Vicente ,San Vicente Reservoir ,San Vicente Creek ,false,true</item>
+    <item>PRU,LAKE PIRU,Santa Felicia ,Lake Piru,Piru Creek ,false,true</item>
+    <item>SGC,SANTIAGO CREEK RES (IRVINE LAKE),Santiago Creek , ,Sangiago Creek ,false,true</item>
+    <item>SFL,SCOTTS FLAT,Scotts Flat ,Scotts Flat Reservoir ,Deer Creek ,false,true</item>
+    <item>SVO,SEVEN OAKS DAM,Seven Oaks , ,Santa Ana River ,true,true</item>
+    <item>SHA,SHASTA DAM (USBR),Shasta ,Lake Shasta ,Sacramento River ,true,true</item>
+    <item>SHV,SHAVER LAKE,Shaver ,Shaver Lake ,San Joaquin River ,false,true</item>
+    <item>SIV,SILVER LAKE RESERVOIR,Silver ,Silver Lake ,Silver Fork American River ,true,true</item>
+    <item>SKN,SKINNER,Skinner Clearwell ,Skinner Lake ,none ,false,true</item>
+    <item>SLB,SLAB CREEK,Slab Creek ,Slab Creek Reservoir ,S Fork American River ,true,true</item>
+    <item>SLC,SLY CREEK,Sly Creek , ,Lost Creek ,true,true</item>
+    <item>JNK,JENKINSON LAKE,Sly Park ,Jenkinson Lake ,Cosumnes River ,false,true</item>
+    <item>SOL,LAKE SOLANO,Solano ,Lake Solano ,Putah Creek ,false,true</item>
+    <item>SLJ,SOULAJULE DAM,Soulajule ,Soulajule,San Francisco Bay ,false,true</item>
+    <item>SLK,SOUTH LAKE,South Lake ,South Lake ,Bishop Creek ,false,true</item>
+    <item>SPG,SPAULDING LAKE,Spaulding ,Spaulding Lake ,S Fork Yuba River ,false,true</item>
+    <item>SPM,SPICER MEADOWS,Spicer Meadows ,New Spicer Meadows Reservoir,N Fork Stanislaus River ,true,true</item>
+    <item>STP,STAMPEDE,Stampede ,Stampede Lake ,Little Truckee River ,true,true</item>
+    <item>STG,STONY GORGE RESERVOIR,Stony Gorge ,Stony Gorge Reservoir ,Stony Creek ,false,true</item>
+    <item>SCC,SUCCESS DAM,Success ,Lake Success ,Tule River ,true,true</item>
+    <item>STD,SUTHERLAND RESERVOIR,Sutherland ,Sutherland Lake ,Santa Ysabel Creek ,false,true</item>
+    <item>SW3,SWEETWATER RESERVOIR,Sweetwater ,Sweetwater Reservoir ,Sweetwater Creek ,false,true</item>
+    <item>TRM,TERMINUS DAM,Terminus ,Lake Kaweah ,Kaweah River ,true,true</item>
+    <item>TAB,THERMALITO AFTERBAY,Thermalito ,Thermalito Afterbay ,Feather River ,true,true</item>
+    <item>TMT,THERMALITO TOTAL,Thermalito ,Thermalito System ,Feather River ,false,true</item>
+    <item>TNM,TINEMAHA RESERVOIR,Tinemaha ,Tinemaha Reservoir ,Owens River ,false,true</item>
+    <item>CLE,TRINITY LAKE,Trinity ,Trinity Lake ,Trinity River ,true,true</item>
+    <item>TUL,TULLOCH,Tulloch ,Tulloch Reservoir ,Stanislaus River ,true,true</item>
+    <item>TLC,TURLOCK LAKE,Turlock ,Turlock Lake ,Tuolumne River ,false,true</item>
+    <item>TWT,TWITCHELL,Twitchell ,Twitchell Reservoir ,Cuyama River ,false,true</item>
+    <item>UNV,UNION VALLEY,Union Valley ,Union Valley Reservoir ,S Fork American River ,true,true</item>
+    <item>KLM,UPPER KLAMATH,Upper Klamath ,Upper Klamath ,Klamath River ,false,true</item>
+    <item>SJT,UPPER SAN JOAQUIN TOTAL,Upper San Joaquin R Total , ,San Joaquin River ,true,false</item>
+    <item>USL,U SAN LEANDRO,Upper San Leandro ,U San Leandro R ,Alameda Creek ,false,true</item>
+    <item>VIL,VAIL LAKE,Vail ,Vail Reservoir ,Temecula Creek ,false,true</item>
+    <item>TAE,THOMAS A EDISON,Vermilion Valley ,Thomas A. Edison ,S Fork San Joaquin River ,false,true</item>
+    <item>EDS,THOMAS A EDISON,Vermillion Valley ,Thomas A. Edison Lake ,S Fork San Joaquin River ,false,false</item>
+    <item>VLP,VILLA PARK,Villa Park ,Villa Park Reservoir ,Santiago Creek ,false,true</item>
+    <item>WRS,WARM SPRINGS (USACE),Warm Springs ,Warm Springs Reservoir ,Russian River ,true,true</item>
+    <item>WHR,WHALE ROCK,Whale Rock ,Whale Rock Lake ,Old Creek ,false,true</item>
+    <item>WHI,WHISKEYTOWN DAM (USBR),Whiskeytown ,Whiskeytown Lake ,Clear Creek ,true,true</item>
+    <item>WSN,WISHON,Wishon ,Lake Wishon ,Helms Creek ,true,true</item>
     </string-array>
 </resources>
