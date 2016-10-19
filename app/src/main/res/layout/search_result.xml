@@ -14,6 +14,7 @@
         android:id="@+id/HasDaily"
         android:visibility="gone"
         android:text="@string/daily"
+        android:onClick="DailyClicked"
         android:gravity="center_horizontal"/>
     <Button
         android:layout_width="wrap_content"
@@ -21,6 +22,7 @@
         android:id="@+id/HasMonthly"
         android:visibility="gone"
         android:text="@string/monthly"
+        android:onClick="MonthlyClicked"
         android:gravity="center_horizontal"/>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"

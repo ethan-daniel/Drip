@@ -20,6 +20,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,9 +38,14 @@ public class SearchResult extends AppCompatActivity {
     private TableLayout displayData;
     private Button monthlyButton;
     private Button dailyButton;
+    private TableRow holdRow1;
+    private TableRow holdRow2;
+    private boolean onDaily;
+    private boolean onMonthly;
     private String mSearchReservoirID;
     private String mSearchOrigQuery;
     private String endData;
+    private String mStorageURL;
     private String noData;
     private String[] mDataSplit;
     private String[] mAllReservoirNames;
@@ -49,7 +56,12 @@ public class SearchResult extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result);
-
+        dailyButton = (Button) findViewById(R.id.HasDaily);
+        dailyButton.setVisibility(View.INVISIBLE);
+        monthlyButton = (Button) findViewById(R.id.HasMonthly);
+        monthlyButton.setVisibility(View.INVISIBLE);
+        onDaily = false;
+        onMonthly = false;
         mAllReservoirNames = getResources().getStringArray(R.array.reservoir_names);
         handleIntent(getIntent());
         displayData = (TableLayout) findViewById(R.id.data_table);
@@ -68,11 +80,11 @@ public class SearchResult extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
         }
         mSearchOrigQuery = intent.getStringExtra("mQuery");
-        if(mSearchOrigQuery.length() > 3) {
-            mReservoirName = new String[7];
+        if(mSearchOrigQuery.length() >= 3) {
             for (int i = 0; i < mAllReservoirNames.length; i++) {
                 if (mAllReservoirNames[i].toLowerCase().contains(mSearchOrigQuery)) {
                     mReservoirName = mAllReservoirNames[i].split(",");
+                    i = mAllReservoirNames.length;
                 }
             }
             Log.d("reservoirname", mReservoirName[0]);
@@ -80,11 +92,17 @@ public class SearchResult extends AppCompatActivity {
         }
              if(mReservoirName[5].contains("true") && mReservoirName[6].contains("true")){
             //dodaily, set both visible
-                 String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                 onDaily = true;
+                 dailyButton.setVisibility(View.VISIBLE);
+                 monthlyButton.setVisibility(View.VISIBLE);
+
+                 mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
                  ConnectivityManager connMgr = (ConnectivityManager)
                          getSystemService(Context.CONNECTIVITY_SERVICE);
                  NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
                  if (networkInfo != null && networkInfo.isConnected()) {
+                     new DownloadWebpageTask().execute(mStorageURL);
+                     mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=M&start_date=&end_date=&data_wish=View+CSV+Data";
                      new DownloadWebpageTask().execute(mStorageURL);
                  } else {
                      TextView errorMSG = (TextView) findViewById(R.id.error_message);
@@ -92,9 +110,9 @@ public class SearchResult extends AppCompatActivity {
                  }
 
             }
-            else if(mReservoirName[5].contains("true") && mReservoirName[6].contains("false"){
+            else if(mReservoirName[5].contains("true") && mReservoirName[6].contains("false")){
             //dodaily, don't set either visible
-            String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+            mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
             ConnectivityManager connMgr = (ConnectivityManager)
                     getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -105,20 +123,23 @@ public class SearchResult extends AppCompatActivity {
                 errorMSG.setText(getString(R.string.network_connection_error));
             }
             }
-            else {
+             else if(mReservoirName[5].contains("false")&& mReservoirName[6].contains("true")){
+                 mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=M&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                 ConnectivityManager connMgr = (ConnectivityManager)
+                         getSystemService(Context.CONNECTIVITY_SERVICE);
+                 NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                 if (networkInfo != null && networkInfo.isConnected()) {
+                     new DownloadWebpageTask().execute(mStorageURL);
+                 } else {
+                     TextView errorMSG = (TextView) findViewById(R.id.error_message);
+                     errorMSG.setText(getString(R.string.network_connection_error));
+                 }
+             }
+            else{
+            TextView noData = (TextView) findViewById(R.id.error_message);
+            noData.setText("No Data");
             //don't do anything, displayData addview
             }
-
-        String mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            new DownloadWebpageTask().execute(mStorageURL);
-        } else {
-            TextView errorMSG = (TextView) findViewById(R.id.error_message);
-            errorMSG.setText(getString(R.string.network_connection_error));
-        }
     }
 
     // When user clicks button, calls AsyncTask.
@@ -159,7 +180,7 @@ public class SearchResult extends AppCompatActivity {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            if (result.substring(0,6).equals(firstLineCSV)) {
+            if (result.contains(firstLineCSV)) {
                 Log.d("result", result);
                 mDataSplit = result.split(";");
                 String[] temp;
@@ -249,6 +270,36 @@ public class SearchResult extends AppCompatActivity {
         tDate.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         row.addView(tDate);
         row.addView(tLevels);
+        if(mStorageURL.contains("dur_code=M") && dailyButton.getVisibility()==View.VISIBLE) {
+            holdRow1 = row;
+            onDaily = true;
+        }
+        else{
+        holdRow2 = row;
         displayData.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+    }
+    }
+    public void DailyClicked(View view){
+        if(onDaily == false){
+            TableRow temp = holdRow2;
+            displayData.removeAllViews();
+            displayData.addView(holdRow1, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            holdRow2 = holdRow1;
+            holdRow1 = temp;
+            onMonthly = false;
+            onDaily = true;
+        }
+
+    }
+    public void MonthlyClicked(View view){
+        if(onMonthly == false){
+            TableRow temp = holdRow2;
+            displayData.removeAllViews();
+            displayData.addView(holdRow1, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+            holdRow2 = holdRow1;
+            holdRow1 = temp;
+            onDaily = false;
+            onMonthly = true;
+        }
     }
 }
