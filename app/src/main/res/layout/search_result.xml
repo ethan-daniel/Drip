@@ -7,23 +7,28 @@
         android:id="@+id/searched_name"
         android:text=""
         android:gravity="center_horizontal"
-        android:textSize="24sp"/>
+        android:textSize="22sp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/HasDaily"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:layout_below="@id/searched_name"
         android:text="@string/daily"
+        android:layout_marginStart="40dp"
         android:onClick="DailyClicked"
-        android:gravity="center_horizontal"/>
+        android:layout_gravity="end"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/HasMonthly"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:layout_toEndOf="@id/HasDaily"
+        android:layout_marginStart="140dp"
+        android:layout_below="@id/searched_name"
         android:text="@string/monthly"
         android:onClick="MonthlyClicked"
-        android:gravity="center_horizontal"/>
+        android:layout_gravity="start"/>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -36,7 +41,8 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"
         android:id="@+id/data_table"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_below="@id/HasMonthly"
         android:stretchColumns="*">
     </TableLayout>
     </ScrollView>

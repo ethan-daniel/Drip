@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Drip</string>
     <string name="app_label">Drip</string>
+    <string name="no_data">No data</string>
     <string name="search">Search</string>
     <string name="settings">Settings</string>
     <string name="search_hint_home">Search for Reservoirs, Lakes…</string>
@@ -10,8 +11,8 @@
     <string name="network_connection_error">No network connection available.</string>
     <string name="tempPercent">0%</string>
     <string name="url_error">Unable to retrieve web page. URL may be invalid.</string>
-        <string name="daily">Daily</string>
-        <string name="monthly">Monthly</string>
+    <string name="daily">Daily</string>
+    <string name="monthly">Monthly</string>
     <string-array name="reservoir_names">
     <item>APN,ALPINE LAKE,Alpine ,Alpine Lake ,Lagunitas Creek ,false,true</item>
     <item>ANT,ANTELOPE LAKE,Antelope ,Antelope ,Indian Creek ,true,true</item>
