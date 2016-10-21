@@ -220,6 +220,7 @@ public class SearchResult extends AppCompatActivity {
     // an InputStream. Finally, the InputStream is converted into a string, which is
     // displayed in the UI by the AsyncTask's onPostExecute method.
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
+
         @Override
         protected String doInBackground(String... urls) {
 
@@ -236,7 +237,7 @@ public class SearchResult extends AppCompatActivity {
                 Log.d("result", result);
                 mDataSplit = result.split(";");
                 String[] temp;
-                Log.d("handleIntent", mReservoirName[1]);
+                String place = "";
                 mLayoutReservoirName.setText(mReservoirName[1]);
 
 

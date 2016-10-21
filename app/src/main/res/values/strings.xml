@@ -3,7 +3,10 @@
     <string name="app_label">Drip</string>
     <string name="no_data">No data</string>
     <string name="search">Search</string>
-    <string name="settings">Settings</string>
+    <string name="date">Date:</string>
+    <string name="storage">Storage (AF):</string>
+    <string name="aboutUs">About</string>
+    <string name="sources">All data gathered from the CDEC</string>
     <string name="search_hint_home">Search for Reservoirs, Lakes…</string>
     <string name="average">California\'s Average \nStorage</string>
     <string name="kes">Keswick</string>

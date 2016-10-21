@@ -32,9 +32,9 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".SearchResult"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".AboutUs"
+            android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

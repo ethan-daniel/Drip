@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +20,7 @@
         android:visibility="visible"
         android:layout_below="@id/searched_name"
         android:text="@string/daily"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="50dp"
         android:onClick="DailyClicked"
         android:layout_gravity="end"/>
     <Button
@@ -24,28 +29,36 @@
         android:id="@+id/HasMonthly"
         android:visibility="visible"
         android:layout_toEndOf="@id/HasDaily"
-        android:layout_marginStart="140dp"
+        android:layout_marginStart="115dp"
         android:layout_below="@id/searched_name"
         android:text="@string/monthly"
         android:onClick="MonthlyClicked"
         android:layout_gravity="start"/>
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/searched_name"
-        android:fillViewport="true">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"
+        android:id="@+id/dateText"
+        android:layout_below="@id/HasDaily"
+        android:textSize="18sp"
+        android:layout_alignLeft="@id/HasDaily"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/storage"
+        android:textSize="18sp"
+        android:id="@+id/storageText"
+        android:layout_below="@id/HasDaily"
+        android:layout_alignLeft="@id/HasMonthly"/>
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="22sp"
+        android:layout_alignLeft="@id/HasDaily"
         android:id="@+id/data_table"
-        android:layout_marginStart="50dp"
-        android:layout_below="@id/HasMonthly"
+        android:layout_below="@id/storageText"
         android:stretchColumns="*">
     </TableLayout>
-    </ScrollView>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,3 +66,4 @@
         android:duplicateParentState="true"
         android:layout_margin="50dp"/>
 </RelativeLayout>
+</ScrollView>

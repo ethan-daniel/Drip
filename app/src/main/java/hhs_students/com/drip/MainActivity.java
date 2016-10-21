@@ -79,14 +79,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            // action with ID action_refresh was selected
-           /* case R.id.action_search:
-                Intent intent = new Intent(this, SearchActivity.class);
-                startActivity(intent);
-                break;*/
-            // action with ID action_settings was selected
-            case R.id.action_settings:
-
+            case R.id.action_about:
+                Intent i = new Intent(this, AboutUs.class);
+                startActivity(i);
                 break;
             default:
                 break;
