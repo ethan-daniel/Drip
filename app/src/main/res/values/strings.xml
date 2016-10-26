@@ -8,8 +8,9 @@
     <string name="aboutUs">About</string>
     <string name="sources">All data gathered from the CDEC</string>
     <string name="search_hint_home">Search for Reservoirs, Lakes…</string>
-    <string name="average">California\'s Average \nStorage</string>
+    <string name="average">California\'s Average \n Water Storage</string>
     <string name="kes">Keswick</string>
+    <string name="error_msg">Error: The reservoir you tried to search for is not available. Check your spelling and try again.</string>
     <string name="button_data_show">SHOW</string>
     <string name="network_connection_error">No network connection available.</string>
     <string name="tempPercent">0%</string>

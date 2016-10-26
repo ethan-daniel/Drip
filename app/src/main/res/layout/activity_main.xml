@@ -10,24 +10,26 @@
     tools:context="hhs_students.com.drip.MainActivity">
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/StateAverageTitle"
-        android:layout_centerInParent="true"
-        android:text="@string/average"
-        android:textSize="21sp"
-        android:gravity="center"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="@string/tempPercent"
-        android:layout_below="@id/StateAverageTitle"
-        android:id="@+id/StateAverage"
-        android:textSize="76sp"
         android:layout_centerInParent="true"
-        android:layout_alignEnd="@id/StateAverageTitle"
-        android:layout_alignStart="@id/StateAverageTitle"/>
+        android:gravity="center"
+        android:id="@+id/StateAverage"
+        android:textSize="100sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/StateAverageTitle"
+        android:text="@string/average"
+        android:textSize="32sp"
+        android:layout_above="@id/StateAverage"
+        android:textColor="@color/black"
+        android:gravity="center"/>
+
 
 </RelativeLayout>

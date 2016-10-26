@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -85,23 +86,10 @@ public class SearchResult extends AppCompatActivity {
         boolean hasReservoir = false;
         mSearchOrigQuery = intent.getStringExtra("mQuery");
         if(mSearchOrigQuery.length() >= 3) {
-            if(mSearchOrigQuery.length() == 3) {
-            for (int i = 0; i < mAllReservoirNames.length; i++) {
-                String[] temp = mAllReservoirNames[i].split(",");
-                if (temp[0].toLowerCase().contains(mSearchOrigQuery)) {
-                    mReservoirName = mAllReservoirNames[i].split(",");
-                    hasReservoir = true;
-                    i = mAllReservoirNames.length;
-                }
-            }
-            }
-            if (hasReservoir)
-                mSearchReservoirID = mReservoirName[0];
-            else {
-                if (mSearchOrigQuery.length() >= 3) {
+                if (mSearchOrigQuery.length() == 3) {
                     for (int i = 0; i < mAllReservoirNames.length; i++) {
                         String[] temp = mAllReservoirNames[i].split(",");
-                        if (temp[1].toLowerCase().contains(mSearchOrigQuery)) {
+                        if (temp[0].toLowerCase().contains(mSearchOrigQuery)) {
                             mReservoirName = mAllReservoirNames[i].split(",");
                             hasReservoir = true;
                             i = mAllReservoirNames.length;
@@ -114,7 +102,7 @@ public class SearchResult extends AppCompatActivity {
                     if (mSearchOrigQuery.length() >= 3) {
                         for (int i = 0; i < mAllReservoirNames.length; i++) {
                             String[] temp = mAllReservoirNames[i].split(",");
-                            if (temp[2].toLowerCase().contains(mSearchOrigQuery)) {
+                            if (temp[1].toLowerCase().contains(mSearchOrigQuery)) {
                                 mReservoirName = mAllReservoirNames[i].split(",");
                                 hasReservoir = true;
                                 i = mAllReservoirNames.length;
@@ -127,7 +115,7 @@ public class SearchResult extends AppCompatActivity {
                         if (mSearchOrigQuery.length() >= 3) {
                             for (int i = 0; i < mAllReservoirNames.length; i++) {
                                 String[] temp = mAllReservoirNames[i].split(",");
-                                if (temp[3].toLowerCase().contains(mSearchOrigQuery)) {
+                                if (temp[2].toLowerCase().contains(mSearchOrigQuery)) {
                                     mReservoirName = mAllReservoirNames[i].split(",");
                                     hasReservoir = true;
                                     i = mAllReservoirNames.length;
@@ -140,7 +128,7 @@ public class SearchResult extends AppCompatActivity {
                             if (mSearchOrigQuery.length() >= 3) {
                                 for (int i = 0; i < mAllReservoirNames.length; i++) {
                                     String[] temp = mAllReservoirNames[i].split(",");
-                                    if (temp[4].toLowerCase().contains(mSearchOrigQuery)) {
+                                    if (temp[3].toLowerCase().contains(mSearchOrigQuery)) {
                                         mReservoirName = mAllReservoirNames[i].split(",");
                                         hasReservoir = true;
                                         i = mAllReservoirNames.length;
@@ -149,51 +137,68 @@ public class SearchResult extends AppCompatActivity {
                             }
                             if (hasReservoir)
                                 mSearchReservoirID = mReservoirName[0];
+                            else {
+                                if (mSearchOrigQuery.length() >= 3) {
+                                    for (int i = 0; i < mAllReservoirNames.length; i++) {
+                                        String[] temp = mAllReservoirNames[i].split(",");
+                                        if (temp[4].toLowerCase().contains(mSearchOrigQuery)) {
+                                            mReservoirName = mAllReservoirNames[i].split(",");
+                                            hasReservoir = true;
+                                            i = mAllReservoirNames.length;
+                                        }
+                                    }
+                                }
+                                if (hasReservoir)
+                                    mSearchReservoirID = mReservoirName[0];
+                            }
                         }
                     }
                 }
             }
-        }
-        ConnectivityManager connMgr = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-             if(mReservoirName[5].contains("true") && mReservoirName[6].contains("true")){
-            //dodaily, set both visible
-                 onDaily = true;
-                 mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
-                 if (networkInfo != null && networkInfo.isConnected()) {
-                     new DownloadWebpageTask().execute(mStorageURL);
-                 } else {
-                     TextView errorMSG = (TextView) findViewById(R.id.error_message);
-                     errorMSG.setText(getString(R.string.network_connection_error));
-                 }
+            if(!hasReservoir){
+                Intent mineIntent = new Intent(this,ErrorSearch.class);
+                startActivity(mineIntent);
+            }
 
+                ConnectivityManager connMgr = (ConnectivityManager)
+                        getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+                if (mReservoirName[5].contains("true") && mReservoirName[6].contains("true")) {
+                    //dodaily, set both visible
+                    onDaily = true;
+                    mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        new DownloadWebpageTask().execute(mStorageURL);
+                    } else {
+                        TextView errorMSG = (TextView) findViewById(R.id.error_message);
+                        errorMSG.setText(getString(R.string.network_connection_error));
+                    }
+
+                } else if (mReservoirName[5].contains("true") && mReservoirName[6].contains("false")) {
+                    //dodaily, don't set either visible
+                    mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        new DownloadWebpageTask().execute(mStorageURL);
+                    } else {
+                        TextView errorMSG = (TextView) findViewById(R.id.error_message);
+                        errorMSG.setText(getString(R.string.network_connection_error));
+                    }
+                } else if (mReservoirName[5].contains("false") && mReservoirName[6].contains("true")) {
+                    mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=M&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                    if (networkInfo != null && networkInfo.isConnected()) {
+                        new DownloadWebpageTask().execute(mStorageURL);
+                    } else {
+                        TextView errorMSG = (TextView) findViewById(R.id.error_message);
+                        errorMSG.setText(getString(R.string.network_connection_error));
+                    }
+                } else {
+                    TextView noData = (TextView) findViewById(R.id.error_message);
+                    noData.setText(getString(R.string.no_data));
+                    //don't do anything, displayData addview
+                }
             }
-            else if(mReservoirName[5].contains("true") && mReservoirName[6].contains("false")){
-            //dodaily, don't set either visible
-            mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
-            if (networkInfo != null && networkInfo.isConnected()) {
-                new DownloadWebpageTask().execute(mStorageURL);
-            } else {
-                TextView errorMSG = (TextView) findViewById(R.id.error_message);
-                errorMSG.setText(getString(R.string.network_connection_error));
-            }
-            }
-             else if(mReservoirName[5].contains("false")&& mReservoirName[6].contains("true")){
-                 mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=M&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
-                 if (networkInfo != null && networkInfo.isConnected()) {
-                     new DownloadWebpageTask().execute(mStorageURL);
-                 } else {
-                     TextView errorMSG = (TextView) findViewById(R.id.error_message);
-                     errorMSG.setText(getString(R.string.network_connection_error));
-                 }
-             }
-            else{
-            TextView noData = (TextView) findViewById(R.id.error_message);
-            noData.setText(getString(R.string.no_data));
-            //don't do anything, displayData addview
-            }
-    }
+
+
 
     // When user clicks button, calls AsyncTask.
     // Before attempting to fetch the URL, makes sure that there is a network connection.
@@ -312,19 +317,21 @@ public class SearchResult extends AppCompatActivity {
     public void addRow(String date, String levels) {
         TableRow row = new TableRow(this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(0, 100, 0, 5);
         row.setLayoutParams(lp);
         TextView tDate = new TextView(this);
         tDate.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         TextView tLevels = new TextView(this);
-        tLevels.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        tLevels.setTextColor(Color.BLACK);
+        tLevels.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
         tDate.setText(date);
+        tDate.setTextColor(Color.BLACK);
         tDate.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT));
         tLevels.setText(levels);
         tDate.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         row.addView(tDate);
         row.addView(tLevels);
-            Log.d("I did It", "else addView");
-            displayData.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+        displayData.addView(row, new TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
 
         }
 

@@ -10,13 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searched_name"
+        android:padding="10dp"
+        android:textColor="@color/black"
         android:text=""
         android:gravity="center_horizontal"
-        android:textSize="22sp"/>
+        android:textSize="32sp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/HasDaily"
+        android:layout_marginBottom="7dp"
+        android:textColor="@color/black"
         android:visibility="visible"
         android:layout_below="@id/searched_name"
         android:text="@string/daily"
@@ -26,6 +30,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:id="@+id/HasMonthly"
         android:visibility="visible"
         android:layout_toEndOf="@id/HasDaily"
@@ -39,15 +44,19 @@
         android:layout_height="wrap_content"
         android:text="@string/date"
         android:id="@+id/dateText"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/black"
         android:layout_below="@id/HasDaily"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:layout_alignLeft="@id/HasDaily"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/storage"
-        android:textSize="18sp"
+        android:textSize="22sp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/storageText"
+        android:textColor="@color/black"
         android:layout_below="@id/HasDaily"
         android:layout_alignLeft="@id/HasMonthly"/>
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
