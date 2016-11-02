@@ -39,6 +39,11 @@
         android:text="@string/monthly"
         android:onClick="MonthlyClicked"
         android:layout_gravity="start"/>
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:layout_below="@id/HasMonthly"
+        android:id="@+id/graph" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +51,7 @@
         android:id="@+id/dateText"
         android:layout_marginBottom="10dp"
         android:textColor="@color/black"
-        android:layout_below="@id/HasDaily"
+        android:layout_below="@id/graph"
         android:textSize="22sp"
         android:layout_alignLeft="@id/HasDaily"/>
     <TextView
@@ -57,7 +62,7 @@
         android:layout_marginBottom="10dp"
         android:id="@+id/storageText"
         android:textColor="@color/black"
-        android:layout_below="@id/HasDaily"
+        android:layout_below="@id/graph"
         android:layout_alignLeft="@id/HasMonthly"/>
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

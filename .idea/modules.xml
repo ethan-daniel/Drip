@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Drip.iml" filepath="$PROJECT_DIR$/Drip.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mdrip.iml" filepath="$PROJECT_DIR$/mdrip.iml" />
+      <module fileurl="file://$PROJECT_DIR$/m_Drip.iml" filepath="$PROJECT_DIR$/m_Drip.iml" />
     </modules>
   </component>
 </project>
