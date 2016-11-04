@@ -9,7 +9,7 @@ public class ErrorSearch extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_activity);
+        setContentView(R.layout.error_message);
     }
     @Override
     protected void onNewIntent(Intent intent){

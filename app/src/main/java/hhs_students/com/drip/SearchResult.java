@@ -58,6 +58,7 @@ public class SearchResult extends AppCompatActivity {
     private String endData;
     private String mStorageURL;
     private ArrayList<String> mStorageLevels;
+    private GraphView graphData;
     private String noData;
     private String[] mDataSplit;
     private String[] mAllReservoirNames;
@@ -74,6 +75,7 @@ public class SearchResult extends AppCompatActivity {
         onMonthly = false;
         mStorageLevels = new ArrayList<String>();
         gettingMonthly = false;
+        graphData = (GraphView) findViewById(R.id.graph);
         mAllReservoirNames = getResources().getStringArray(R.array.reservoir_names);
         mReservoirName = new String[1];
         handleIntent(getIntent());
@@ -96,12 +98,28 @@ public class SearchResult extends AppCompatActivity {
         }
         hasReservoir = false;
         mSearchOrigQuery = intent.getStringExtra("mQuery");
-        if (mSearchOrigQuery.length() >= 3) {
+        if (mSearchOrigQuery.length() < 3) {
+            Intent errorIntent = new Intent(this, ErrorSearch.class);
+            startActivity(errorIntent);
+        } else {
 
-            /*    if (mSearchOrigQuery.length() >= 3) {
+            if (mSearchOrigQuery.length() >= 3) {
+                for (int i = 0; i < mAllReservoirNames.length; i++) {
+                    String[] temp = mAllReservoirNames[i].split(",");
+                    if (temp[0].toLowerCase().contains(mSearchOrigQuery)) {
+                        mReservoirName = mAllReservoirNames[i].split(",");
+                        hasReservoir = true;
+                        i = mAllReservoirNames.length;
+                    }
+                }
+            }
+            if (hasReservoir)
+                mSearchReservoirID = mReservoirName[0];
+            else {
+                if (mSearchOrigQuery.length() >= 3) {
                     for (int i = 0; i < mAllReservoirNames.length; i++) {
                         String[] temp = mAllReservoirNames[i].split(",");
-                        if (temp[0].toLowerCase().contains(mSearchOrigQuery)) {
+                        if (temp[1].toLowerCase().contains(mSearchOrigQuery)) {
                             mReservoirName = mAllReservoirNames[i].split(",");
                             hasReservoir = true;
                             i = mAllReservoirNames.length;
@@ -114,7 +132,7 @@ public class SearchResult extends AppCompatActivity {
                     if (mSearchOrigQuery.length() >= 3) {
                         for (int i = 0; i < mAllReservoirNames.length; i++) {
                             String[] temp = mAllReservoirNames[i].split(",");
-                            if (temp[1].toLowerCase().contains(mSearchOrigQuery)) {
+                            if (temp[2].toLowerCase().contains(mSearchOrigQuery)) {
                                 mReservoirName = mAllReservoirNames[i].split(",");
                                 hasReservoir = true;
                                 i = mAllReservoirNames.length;
@@ -127,7 +145,7 @@ public class SearchResult extends AppCompatActivity {
                         if (mSearchOrigQuery.length() >= 3) {
                             for (int i = 0; i < mAllReservoirNames.length; i++) {
                                 String[] temp = mAllReservoirNames[i].split(",");
-                                if (temp[2].toLowerCase().contains(mSearchOrigQuery)) {
+                                if (temp[3].toLowerCase().contains(mSearchOrigQuery)) {
                                     mReservoirName = mAllReservoirNames[i].split(",");
                                     hasReservoir = true;
                                     i = mAllReservoirNames.length;
@@ -140,7 +158,7 @@ public class SearchResult extends AppCompatActivity {
                             if (mSearchOrigQuery.length() >= 3) {
                                 for (int i = 0; i < mAllReservoirNames.length; i++) {
                                     String[] temp = mAllReservoirNames[i].split(",");
-                                    if (temp[3].toLowerCase().contains(mSearchOrigQuery)) {
+                                    if (temp[4].toLowerCase().contains(mSearchOrigQuery)) {
                                         mReservoirName = mAllReservoirNames[i].split(",");
                                         hasReservoir = true;
                                         i = mAllReservoirNames.length;
@@ -149,60 +167,15 @@ public class SearchResult extends AppCompatActivity {
                             }
                             if (hasReservoir)
                                 mSearchReservoirID = mReservoirName[0];
-                            else {
-                                if (mSearchOrigQuery.length() >= 3) {
-                                    for (int i = 0; i < mAllReservoirNames.length; i++) {
-                                        String[] temp = mAllReservoirNames[i].split(",");
-                                        if (temp[4].toLowerCase().contains(mSearchOrigQuery)) {
-                                            mReservoirName = mAllReservoirNames[i].split(",");
-                                            hasReservoir = true;
-                                            i = mAllReservoirNames.length;
-                                        }
-                                    }
-                                }
-                                if (hasReservoir)
-                                    mSearchReservoirID = mReservoirName[0];
-                            }
                         }
                     }
                 }
-            }*/
-
-            for (int i = 0; i < 5 || !hasReservoir; i++) {
-                    for (int e = 0; e < mAllReservoirNames.length || !hasReservoir; e++) {
-                        if (i == 0) {
-                            if (mSearchOrigQuery.length() == 3) {
-                                Log.d("what did I do", "e");
-                                String[] temp = mAllReservoirNames[e].split(",");
-                                if (temp[i].toLowerCase().contains(mSearchOrigQuery.toLowerCase())) {
-                                    mReservoirName = temp;
-                                    hasReservoir = true;
-                                }
-                            }
-                        }
-                        else {
-                                String[] temp = mAllReservoirNames[e].split(",");
-                                if (temp[i].toLowerCase().contains(mSearchOrigQuery.toLowerCase())) {
-                                    mReservoirName = temp;
-                                    hasReservoir = true;
-                                }
-                            }
-                        }
-                }
-
             }
-        else {
-            Intent errorIntent = new Intent(this, ErrorSearch.class);
-            startActivity(errorIntent);
-        }
             if (!hasReservoir) {
-
-            } else {
-                mSearchReservoirID = mReservoirName[0];
+                Intent errorIntent = new Intent(this, ErrorSearch.class);
+                startActivity(errorIntent);
+                return;
             }
-
-
-
 
 
             ConnectivityManager connMgr = (ConnectivityManager)
@@ -237,11 +210,12 @@ public class SearchResult extends AppCompatActivity {
                     errorMSG.setText(getString(R.string.network_connection_error));
                 }
             } else {
-                TextView noData = (TextView) findViewById(R.id.error_message);
-                noData.setText(getString(R.string.no_data));
+                Intent uhOhIntent = new Intent(this, ErrorSearch.class);
+                startActivity(uhOhIntent);
                 //don't do anything, displayData addview
             }
         }
+    }
 
 
 
@@ -292,7 +266,7 @@ public class SearchResult extends AppCompatActivity {
                 String[] temp;
                 String place = "";
                 mLayoutReservoirName.setText(mReservoirName[1]);
-
+                mStorageLevels.clear();
 
                 for (int i = 2; i < mDataSplit.length; i++) {
                     temp = mDataSplit[i].split(",");
@@ -305,7 +279,6 @@ public class SearchResult extends AppCompatActivity {
                         addRow(dateFormat(temp[0]), temp[2]);
                     }
                 }
-                GraphView graph = (GraphView) findViewById(R.id.graph);
                 double[] tempStorageLevels = new double[mStorageLevels.size()];
                 for (int i = 0; i < mStorageLevels.size(); i++) {
                     tempStorageLevels[i] = Integer.parseInt(mStorageLevels.get(i));
@@ -317,8 +290,8 @@ public class SearchResult extends AppCompatActivity {
                 }
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(tempDataPoints);
                 series.setDrawDataPoints(true);
-                graph.removeAllSeries();
-                graph.addSeries(series);
+                graphData.removeAllSeries();
+                graphData.addSeries(series);
 
                 }
             }

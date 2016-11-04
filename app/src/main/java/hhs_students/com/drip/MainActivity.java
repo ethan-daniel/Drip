@@ -16,6 +16,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.support.v7.widget.SearchView;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,7 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,14 +40,19 @@ public class MainActivity extends AppCompatActivity {
     private int lineCount = 498;
     private SearchView searchView;
     private String M_SEARCH;
+    private AlphaAnimation inAnimation;
+    private AlphaAnimation outAnimation;
+    private FrameLayout progressBarHolder;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MyTask().execute();
         stateAverage = (TextView) findViewById(R.id.StateAverage);
         searchView = (SearchView) findViewById(R.id.action_search);
+        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
         Intent intent = getIntent();
         String stringUrl = "http://cdec.water.ca.gov/cgi-progs/reservoirs/STORSUM";
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -55,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
             TextView errorMSG = (TextView) findViewById(R.id.error_message);
             errorMSG.setText(getString(R.string.network_connection_error));
         }
-
     }
 
     @Override
@@ -98,6 +106,38 @@ public class MainActivity extends AppCompatActivity {
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
+
+        private class MyTask extends AsyncTask <Void, Void, Void> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                inAnimation = new AlphaAnimation(0f, 1f);
+                inAnimation.setDuration(200);
+                progressBarHolder.setAnimation(inAnimation);
+                progressBarHolder.setVisibility(View.VISIBLE);
+            }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                outAnimation = new AlphaAnimation(1f, 0f);
+                outAnimation.setDuration(200);
+                progressBarHolder.setAnimation(outAnimation);
+                progressBarHolder.setVisibility(View.GONE);
+            }
+
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    for (int i = 0; i < 5; i++) {
+                        TimeUnit.SECONDS.sleep(1);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        }
+
 
         // onPostExecute displays the results of the AsyncTask.
         @Override
