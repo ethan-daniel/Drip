@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MyTask().execute();
+        MyTask task = new MyTask();
+        task.execute();
         stateAverage = (TextView) findViewById(R.id.StateAverage);
         searchView = (SearchView) findViewById(R.id.action_search);
         progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
@@ -106,45 +107,42 @@ public class MainActivity extends AppCompatActivity {
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
-
-        private class MyTask extends AsyncTask <Void, Void, Void> {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                inAnimation = new AlphaAnimation(0f, 1f);
-                inAnimation.setDuration(200);
-                progressBarHolder.setAnimation(inAnimation);
-                progressBarHolder.setVisibility(View.VISIBLE);
-            }
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                outAnimation = new AlphaAnimation(1f, 0f);
-                outAnimation.setDuration(200);
-                progressBarHolder.setAnimation(outAnimation);
-                progressBarHolder.setVisibility(View.GONE);
-            }
-
-            @Override
-            protected Void doInBackground(Void... params) {
-                try {
-                    for (int i = 0; i < 5; i++) {
-                        TimeUnit.SECONDS.sleep(1);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
         }
 
-
-        // onPostExecute displays the results of the AsyncTask.
+    private class MyTask extends AsyncTask <Void, Void, Void> {
         @Override
-        protected void onPostExecute(String result) {
-            stateAverage.setText(result);
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+            inAnimation = new AlphaAnimation(0f, 1f);
+            inAnimation.setDuration(200);
+            progressBarHolder.setAnimation(inAnimation);
+            progressBarHolder.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            outAnimation = new AlphaAnimation(1f, 0f);
+            outAnimation.setDuration(200);
+            progressBarHolder.setAnimation(outAnimation);
+            progressBarHolder.setVisibility(View.GONE);
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                for (int i = 0; i < 5; i++) {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
+
         private String downloadUrl(String myurl) throws IOException {
             InputStream is = null;
             // Only display the first 500 characters of the retrieved
@@ -192,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
             counter++;
         }
         String[] TotalNums = line.split("</td><td align=right>");
+        stateAverage.setText(TotalNums[TotalNums.length-2] + "%");
         return TotalNums[TotalNums.length-2] + "%";
     }
 }
