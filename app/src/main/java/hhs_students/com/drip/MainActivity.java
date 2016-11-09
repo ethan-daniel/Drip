@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private String mQuery;
     private int lineCount = 498;
     private SearchView searchView;
+    private String storagePercentage;
     private String M_SEARCH;
     private AlphaAnimation inAnimation;
     private AlphaAnimation outAnimation;
@@ -51,9 +53,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         MyTask task = new MyTask();
         task.execute();
-        stateAverage = (TextView) findViewById(R.id.StateAverage);
         searchView = (SearchView) findViewById(R.id.action_search);
         progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+        stateAverage = (TextView) findViewById(R.id.StateAverage);
         Intent intent = getIntent();
         String stringUrl = "http://cdec.water.ca.gov/cgi-progs/reservoirs/STORSUM";
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -73,10 +75,8 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu, menu);
 
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) (menu.findItem(R.id.action_search).getActionView());
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) (menu.findItem(R.id.action_search).getActionView());
         ComponentName cn = getComponentName();
         cn.getPackageName();
         SearchableInfo si = searchManager.getSearchableInfo(cn);
@@ -96,6 +96,58 @@ public class MainActivity extends AppCompatActivity {
 
         return true;
     }
+
+    private String downloadUrl(String myurl) throws IOException {
+        InputStream is = null;
+        // Only display the first 500 characters of the retrieved
+        // web page content.
+        int len = 500;
+
+        try {
+            URL url = new URL(myurl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000 /* milliseconds */);
+            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setRequestMethod("GET");
+            conn.setDoInput(true);
+            // Starts the query
+            conn.connect();
+            int response = conn.getResponseCode();
+            Log.d(DEBUG_TAG, "The response is: " + response);
+            is = conn.getInputStream();
+            // Convert the InputStream into a string
+            stateAverage.setText(readIt(is, len ));
+            return (readIt(is, len));
+
+
+            // Makes sure that the InputStream is closed after the app is
+            // finished using it.
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+    }
+    public String readIt(InputStream stream, int len) throws IOException {
+        Reader reader;
+        reader = new InputStreamReader(stream, "UTF-8");
+        BufferedReader in = new BufferedReader(reader);
+
+        String temp;
+        int counter = 0;
+        String line = "";
+        temp = in.readLine();
+        while(temp != null) {
+            if(counter == lineCount) {
+                line = in.readLine();
+            }
+            temp = in.readLine();
+            counter++;
+        }
+        String[] TotalNums = line.split("</td><td align=right>");
+        return TotalNums[TotalNums.length-2] + "%";
+    }
+
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
@@ -141,56 +193,5 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
-
-        private String downloadUrl(String myurl) throws IOException {
-            InputStream is = null;
-            // Only display the first 500 characters of the retrieved
-            // web page content.
-            int len = 500;
-
-            try {
-                URL url = new URL(myurl);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setReadTimeout(10000 /* milliseconds */);
-                conn.setConnectTimeout(15000 /* milliseconds */);
-                conn.setRequestMethod("GET");
-                conn.setDoInput(true);
-                // Starts the query
-                conn.connect();
-                int response = conn.getResponseCode();
-                Log.d(DEBUG_TAG, "The response is: " + response);
-                is = conn.getInputStream();
-                // Convert the InputStream into a string
-                return (readIt(is, len));
-
-
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
-            } finally {
-                if (is != null) {
-                    is.close();
-                }
-            }
-        }
-    public String readIt(InputStream stream, int len) throws IOException {
-        Reader reader;
-        reader = new InputStreamReader(stream, "UTF-8");
-        BufferedReader in = new BufferedReader(reader);
-
-        String temp;
-        int counter = 0;
-        String line = "";
-        temp = in.readLine();
-        while(temp != null) {
-            if(counter == lineCount) {
-                line = in.readLine();
-            }
-            temp = in.readLine();
-            counter++;
-        }
-        String[] TotalNums = line.split("</td><td align=right>");
-        stateAverage.setText(TotalNums[TotalNums.length-2] + "%");
-        return TotalNums[TotalNums.length-2] + "%";
     }
 }
