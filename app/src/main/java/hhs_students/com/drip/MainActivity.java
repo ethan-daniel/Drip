@@ -6,6 +6,9 @@ import android.app.SearchableInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -23,6 +26,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,26 +41,33 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     private TextView stateAverage;
+    private TextView averageWaterStorageText;
     private String DEBUG_TAG = "ERROR:";
     private String mQuery;
     private int lineCount = 498;
     private SearchView searchView;
     private String storagePercentage;
     private String M_SEARCH;
+    private Typeface robotoLight;
+    /*
     private AlphaAnimation inAnimation;
     private AlphaAnimation outAnimation;
-    private FrameLayout progressBarHolder;
+    private FrameLayout progressBarHolder;*/
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        MyTask task = new MyTask();
-        task.execute();
+        robotoLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
         searchView = (SearchView) findViewById(R.id.action_search);
-        progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
+        //progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
         stateAverage = (TextView) findViewById(R.id.StateAverage);
+        stateAverage.setTypeface(robotoLight);
+        averageWaterStorageText = (TextView) findViewById(R.id.StateAverageTitle);
+        averageWaterStorageText.setTypeface(robotoLight);
+        /*MyTask task = new MyTask();
+        task.execute();*/
         Intent intent = getIntent();
         String stringUrl = "http://cdec.water.ca.gov/cgi-progs/reservoirs/STORSUM";
         ConnectivityManager connMgr = (ConnectivityManager)
@@ -116,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(DEBUG_TAG, "The response is: " + response);
             is = conn.getInputStream();
             // Convert the InputStream into a string
-            stateAverage.setText(readIt(is, len ));
-            return (readIt(is, len));
+            return readIt(is, len);
 
 
             // Makes sure that the InputStream is closed after the app is
@@ -145,6 +156,8 @@ public class MainActivity extends AppCompatActivity {
             counter++;
         }
         String[] TotalNums = line.split("</td><td align=right>");
+        storagePercentage = TotalNums[TotalNums.length-2] + "%";
+        Log.d("ethan1", storagePercentage);
         return TotalNums[TotalNums.length-2] + "%";
     }
 
@@ -161,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         }
         }
 
-    private class MyTask extends AsyncTask <Void, Void, Void> {
+    /*private class MyTask extends AsyncTask <Void, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -179,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
             outAnimation.setDuration(200);
             progressBarHolder.setAnimation(outAnimation);
             progressBarHolder.setVisibility(View.GONE);
-
         }
 
         @Override
@@ -193,5 +205,5 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
+    }*/
 }

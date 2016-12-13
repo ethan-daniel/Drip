@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -35,6 +36,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,6 +62,7 @@ public class SearchResult extends AppCompatActivity {
     private ArrayList<String> mStorageLevels;
     private GraphView graphData;
     private String noData;
+    private Typeface robotoLight;
     private String[] mDataSplit;
     private String[] mAllReservoirNames;
     private String[] mReservoirName;
@@ -69,8 +72,11 @@ public class SearchResult extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_result);
+        robotoLight = Typeface.createFromAsset(getAssets(),"fonts/Roboto-Light.ttf");
         dailyButton = (Button) findViewById(R.id.HasDaily);
         monthlyButton = (Button) findViewById(R.id.HasMonthly);
+        dailyButton.setTypeface(robotoLight);
+        monthlyButton.setTypeface(robotoLight);
         onDaily = false;
         onMonthly = false;
         mStorageLevels = new ArrayList<String>();
@@ -83,6 +89,7 @@ public class SearchResult extends AppCompatActivity {
         holdRow1 = new TableLayout(this);
         holdRow2 = new TableLayout(this);
         mLayoutReservoirName = (TextView) findViewById(R.id.searched_name);
+        mLayoutReservoirName.setTypeface(robotoLight);
         noData = "N/A";
     }
 

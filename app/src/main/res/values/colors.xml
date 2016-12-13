@@ -5,4 +5,5 @@
     <color name="colorAccent">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="googleRed">#F44336</color>
+    <color name="defWhite">#FFFFFF</color>
 </resources>
