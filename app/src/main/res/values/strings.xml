@@ -6,6 +6,7 @@
     <string name="date">Date:</string>
     <string name="storage">Storage (AF):</string>
     <string name="aboutUs">About</string>
+    <string name="contact">Contact</string>
     <string name="sources">All data gathered from the CDEC</string>
     <string name="search_hint_home">Search for Reservoirs, Lakes…</string>
     <string name="average">California\'s Average \n Water Storage</string>

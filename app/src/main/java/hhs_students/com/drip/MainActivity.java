@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     private AlphaAnimation outAnimation;
     private FrameLayout progressBarHolder;*/
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
-
+                break;
+            case R.id.action_contact:
+                break;
             default:
                 break;
         }
@@ -157,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
         }
         String[] TotalNums = line.split("</td><td align=right>");
         storagePercentage = TotalNums[TotalNums.length-2] + "%";
-        Log.d("ethan1", storagePercentage);
         return TotalNums[TotalNums.length-2] + "%";
     }
 
@@ -172,7 +172,13 @@ public class MainActivity extends AppCompatActivity {
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            stateAverage.setText(storagePercentage);
         }
+    }
 
     /*private class MyTask extends AsyncTask <Void, Void, Void> {
         @Override
