@@ -290,12 +290,14 @@ public class SearchResult extends AppCompatActivity {
                 for (int i = 0; i < mStorageLevels.size(); i++) {
                     tempStorageLevels[i] = Integer.parseInt(mStorageLevels.get(i));
                 }
-                DataPoint[] tempDataPoints = new DataPoint[mStorageLevels.size()]; // declare an array of DataPoint objects with the same size as your list
-                for (int i = 0; i < mStorageLevels.size(); i++) {
+                DataPoint[] tempDataPoints = new DataPoint[21]; // declare an array of DataPoint objects with the same size as your list
+                int j = 0;
+                for (int i = mStorageLevels.size()-21; i < mStorageLevels.size(); i++) {
                     // add new DataPoint object to the array for each of your list entries
-                    tempDataPoints[i] = new DataPoint(i, tempStorageLevels[i]); // not sure but I think the second argument should be of type double
+                    tempDataPoints[j] = new DataPoint(j, tempStorageLevels[i]);
+                    j++;
                 }
-                LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(tempDataPoints);
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>(tempDataPoints);
                 series.setDrawDataPoints(true);
                 graphData.removeAllSeries();
                 graphData.addSeries(series);

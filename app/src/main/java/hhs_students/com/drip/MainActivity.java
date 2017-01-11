@@ -41,10 +41,13 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     private TextView stateAverage;
+    private TextView reportGenerated;
     private TextView averageWaterStorageText;
     private String DEBUG_TAG = "ERROR:";
     private String mQuery;
-    private int lineCount = 498;
+    private int lineCountStorage = 498;
+    private int lineCountUpdated = 473;
+    private String reportGeneratedRaw;
     private SearchView searchView;
     private String storagePercentage;
     private String M_SEARCH;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         //progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
         stateAverage = (TextView) findViewById(R.id.StateAverage);
         stateAverage.setTypeface(robotoLight);
+        reportGenerated = (TextView) findViewById(R.id.generatedText);
         averageWaterStorageText = (TextView) findViewById(R.id.StateAverageTitle);
         averageWaterStorageText.setTypeface(robotoLight);
         /*MyTask task = new MyTask();
@@ -150,7 +154,15 @@ public class MainActivity extends AppCompatActivity {
         String line = "";
         temp = in.readLine();
         while(temp != null) {
-            if(counter == lineCount) {
+            if(counter == lineCountUpdated) {
+                line = in.readLine();
+            }
+            temp = in.readLine();
+            counter++;
+        }
+        reportGeneratedRaw = line;
+        while(temp != null) {
+            if(counter == lineCountStorage) {
                 line = in.readLine();
             }
             temp = in.readLine();
@@ -177,6 +189,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             stateAverage.setText(storagePercentage);
+            reportGeneratedRaw = reportGeneratedRaw.substring(19);
+            reportGenerated.setText(reportGeneratedRaw);
         }
     }
 
