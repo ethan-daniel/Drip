@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnected()) {
             new DownloadWebpageTask().execute(stringUrl);
         } else {
-            TextView errorMSG = (TextView) findViewById(R.id.error_message);
-            errorMSG.setText(getString(R.string.network_connection_error));
+
         }
     }
 
@@ -164,15 +163,19 @@ public class MainActivity extends AppCompatActivity {
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-
             // params comes from the execute() call: params[0] is the url.
             try {
                 return downloadUrl(urls[0]);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
+        @Override
+        protected void onPostExecute(String result) {
+            stateAverage.setText(storagePercentage);
         }
+    }
 
     /*private class MyTask extends AsyncTask <Void, Void, Void> {
         @Override
