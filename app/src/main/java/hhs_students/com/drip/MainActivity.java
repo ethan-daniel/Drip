@@ -41,10 +41,13 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     private TextView stateAverage;
+    private TextView reportGenerated;
     private TextView averageWaterStorageText;
     private String DEBUG_TAG = "ERROR:";
     private String mQuery;
-    private int lineCount = 498;
+    private int lineCountStorage = 498;
+    private int lineCountUpdated = 473;
+    private String reportGeneratedRaw;
     private SearchView searchView;
     private String storagePercentage;
     private String M_SEARCH;
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     private AlphaAnimation inAnimation;
     private AlphaAnimation outAnimation;
     private FrameLayout progressBarHolder;*/
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         //progressBarHolder = (FrameLayout) findViewById(R.id.progressBarHolder);
         stateAverage = (TextView) findViewById(R.id.StateAverage);
         stateAverage.setTypeface(robotoLight);
+        reportGenerated = (TextView) findViewById(R.id.generatedText);
         averageWaterStorageText = (TextView) findViewById(R.id.StateAverageTitle);
         averageWaterStorageText.setTypeface(robotoLight);
         /*MyTask task = new MyTask();
@@ -76,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
         if (networkInfo != null && networkInfo.isConnected()) {
             new DownloadWebpageTask().execute(stringUrl);
         } else {
-
+            TextView errorMSG = (TextView) findViewById(R.id.error_message);
+            errorMSG.setText(getString(R.string.network_connection_error));
         }
     }
 
@@ -100,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_about:
-
+                break;
+            case R.id.action_contact:
+                break;
             default:
                 break;
         }
@@ -148,7 +154,15 @@ public class MainActivity extends AppCompatActivity {
         String line = "";
         temp = in.readLine();
         while(temp != null) {
-            if(counter == lineCount) {
+            if(counter == lineCountUpdated) {
+                line = in.readLine();
+            }
+            temp = in.readLine();
+            counter++;
+        }
+        reportGeneratedRaw = line;
+        while(temp != null) {
+            if(counter == lineCountStorage) {
                 line = in.readLine();
             }
             temp = in.readLine();
@@ -156,24 +170,27 @@ public class MainActivity extends AppCompatActivity {
         }
         String[] TotalNums = line.split("</td><td align=right>");
         storagePercentage = TotalNums[TotalNums.length-2] + "%";
-        Log.d("ethan1", storagePercentage);
         return TotalNums[TotalNums.length-2] + "%";
     }
 
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
+
             // params comes from the execute() call: params[0] is the url.
             try {
                 return downloadUrl(urls[0]);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 return "Unable to retrieve web page. URL may be invalid.";
             }
         }
+
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             stateAverage.setText(storagePercentage);
+            reportGeneratedRaw = reportGeneratedRaw.substring(19);
+            reportGenerated.setText(reportGeneratedRaw);
         }
     }
 
