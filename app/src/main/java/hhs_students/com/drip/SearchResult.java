@@ -44,7 +44,7 @@ import java.util.Arrays;
 
 public class SearchResult extends AppCompatActivity {
     private static final String DEBUG_TAG = "HttpExample";
-    private String firstLineCSV = "Title:";
+    private String firstLineCSV = "STATION_ID";
     private TableLayout displayData;
     private Button monthlyButton;
     private Button dailyButton;
@@ -191,7 +191,7 @@ public class SearchResult extends AppCompatActivity {
             if (mReservoirName[5].contains("true") && mReservoirName[6].contains("true")) {
                 //dodaily, set both visible
                 onDaily = true;
-                mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                mStorageURL = "http://cdec.water.ca.gov/dynamicapp/req/CSVDataServlet?Stations=" + mSearchReservoirID + "&SensorNums=15&dur_code=D";//urlText.getText().toString();
                 if (networkInfo != null && networkInfo.isConnected()) {
                     new DownloadWebpageTask().execute(mStorageURL);
                 } else {
@@ -201,7 +201,7 @@ public class SearchResult extends AppCompatActivity {
 
             } else if (mReservoirName[5].contains("true") && mReservoirName[6].contains("false")) {
                 //dodaily, don't set either visible
-                mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                mStorageURL = "http://cdec.water.ca.gov/dynamicapp/req/CSVDataServlet?Stations=" + mSearchReservoirID + "&SensorNums=15&dur_code=D";//urlText.getText().toString();
                 if (networkInfo != null && networkInfo.isConnected()) {
                     new DownloadWebpageTask().execute(mStorageURL);
                 } else {
@@ -209,7 +209,7 @@ public class SearchResult extends AppCompatActivity {
                     errorMSG.setText(getString(R.string.network_connection_error));
                 }
             } else if (mReservoirName[5].contains("false") && mReservoirName[6].contains("true")) {
-                mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=M&start_date=&end_date=&data_wish=View+CSV+Data";//urlText.getText().toString();
+                mStorageURL = "http://cdec.water.ca.gov/dynamicapp/req/CSVDataServlet?Stations=" + mSearchReservoirID + "&SensorNums=15&dur_code=M";//urlText.getText().toString();
                 if (networkInfo != null && networkInfo.isConnected()) {
                     new DownloadWebpageTask().execute(mStorageURL);
                 } else {
@@ -268,22 +268,18 @@ public class SearchResult extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             if (result.contains(firstLineCSV)) {
-                Log.d("result", result);
                 mDataSplit = result.split(";");
-                String[] temp;
-                String place = "";
-                mLayoutReservoirName.setText(mReservoirName[1]);
+                mLayoutReservoirName.setText(mReservoirName[3]);
                 mStorageLevels.clear();
 
-                for (int i = 2; i < mDataSplit.length; i++) {
-                    temp = mDataSplit[i].split(",");
-                    if (!temp[2].equals("m")) {
-                        addRow(dateFormat(temp[0]), temp[2]);
-                        mStorageLevels.add(temp[2]);
+                for (int i = 1; i < mDataSplit.length; i++) {
+                    String [] temp = mDataSplit[i].split(",");
+                    if (!temp[6].equals("---")) {
+                        addRow(dateFormat(temp[4]), temp[6]);
+                        mStorageLevels.add(temp[6]);
                     }
                     else {
-                        temp[2] = noData;
-                        addRow(dateFormat(temp[0]), temp[2]);
+                        addRow(dateFormat(temp[4]), noData);
                     }
                 }
                 double[] tempStorageLevels = new double[mStorageLevels.size()];
@@ -292,7 +288,7 @@ public class SearchResult extends AppCompatActivity {
                 }
                 DataPoint[] tempDataPoints = new DataPoint[21]; // declare an array of DataPoint objects with the same size as your list
                 int j = 0;
-                for (int i = mStorageLevels.size()-21; i < mStorageLevels.size(); i++) {
+                for (int i = mStorageLevels.size() - 21; i < mStorageLevels.size(); i++) {
                     // add new DataPoint object to the array for each of your list entries
                     tempDataPoints[j] = new DataPoint(j, tempStorageLevels[i]);
                     j++;
@@ -355,10 +351,7 @@ public class SearchResult extends AppCompatActivity {
     }
 
     public String dateFormat(String date){
-        Log.d("dateForm", date);
-        if (!date.contains("<!--"))
-            return date.substring(4, 6) + "/" + date.substring(6) + "/" + date.substring(0, 4);
-        return "null";
+        return date.substring(4, 6) + "/" + date.substring(6, 8) + "/" + date.substring(0, 4);
     }
     public void addRow(String date, String levels) {
         TableRow row = new TableRow(this);
@@ -384,7 +377,7 @@ public class SearchResult extends AppCompatActivity {
     public void DailyClicked(View view){
         if(!onDaily && onMonthly) {
             displayData.removeAllViews();
-            mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=D&start_date=&end_date=&data_wish=View+CSV+Data";
+            mStorageURL = "http://cdec.water.ca.gov/dynamicapp/req/CSVDataServlet?Stations=" + mSearchReservoirID + "&SensorNums=15&dur_code=D";
             new DownloadWebpageTask().execute(mStorageURL);
             onMonthly = false;
             onDaily = true;
@@ -394,7 +387,7 @@ public class SearchResult extends AppCompatActivity {
         if(!onMonthly && onDaily){
             Log.d("inside monthly", "inside monthly");
             displayData.removeAllViews();
-            mStorageURL = "http://cdec.water.ca.gov/cgi-progs/queryCSV?station_id=" + mSearchReservoirID + "&sensor_num=15&dur_code=M&start_date=&end_date=&data_wish=View+CSV+Data";
+            mStorageURL = "http://cdec.water.ca.gov/dynamicapp/req/CSVDataServlet?Stations=" + mSearchReservoirID + "&SensorNums=15&dur_code=M";
             new DownloadWebpageTask().execute(mStorageURL);
             onDaily = false;
             onMonthly = true;

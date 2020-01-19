@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView averageWaterStorageText;
     private String DEBUG_TAG = "ERROR:";
     private String mQuery;
-    private int lineCountStorage = 498;
-    private int lineCountUpdated = 473;
+    private int lineCountStorage = 558;
     private String reportGeneratedRaw;
     private SearchView searchView;
     private String storagePercentage;
@@ -154,23 +153,38 @@ public class MainActivity extends AppCompatActivity {
         String line = "";
         temp = in.readLine();
         while(temp != null) {
-            if(counter == lineCountUpdated) {
-                line = in.readLine();
-            }
-            temp = in.readLine();
-            counter++;
-        }
-        reportGeneratedRaw = line;
-        while(temp != null) {
             if(counter == lineCountStorage) {
                 line = in.readLine();
+                break;
             }
             temp = in.readLine();
             counter++;
         }
-        String[] TotalNums = line.split("</td><td align=right>");
-        storagePercentage = TotalNums[TotalNums.length-2] + "%";
-        return TotalNums[TotalNums.length-2] + "%";
+        String[] TotalNums = line.split("STORAGE AS OF ");
+        char c = ' ';
+        int index = 0;
+        StringBuilder builder = new StringBuilder();
+        builder.append("Last Updated: ");
+        String targetLine = TotalNums[1];
+        while (c != '<') {
+            builder.append(targetLine.charAt(index));
+            index++;
+            c = targetLine.charAt(index);
+        }
+        reportGeneratedRaw = builder.toString();
+        TotalNums = line.split("</td><td>");
+        c = ' ';
+        index = 0;
+        builder = new StringBuilder();
+        targetLine = TotalNums[TotalNums.length - 29];
+        while (c != '<') {
+            builder.append(targetLine.charAt(index));
+            index++;
+            c = targetLine.charAt(index);
+        }
+        builder.append('%');
+        storagePercentage = builder.toString();
+        return storagePercentage;
     }
 
     private class DownloadWebpageTask extends AsyncTask<String, Void, String> {
@@ -189,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             stateAverage.setText(storagePercentage);
-            reportGeneratedRaw = reportGeneratedRaw.substring(19);
             reportGenerated.setText(reportGeneratedRaw);
         }
     }
